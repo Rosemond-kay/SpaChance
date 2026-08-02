@@ -1,0 +1,346 @@
+/* SpaChance Design System & Global Styles */
+
+:root {
+  --bg-primary: #ede0c8;
+  --bg-secondary: #f4ea8;
+  --bg-card: #f5eae0;
+  --bg-card-hover: #faefe4;
+  --bg-glass: rgba(237, 224, 200, 0.96);
+  --bg-dark: #231f1c;
+  --text-dark-bg: #ede0c8;
+  
+  --accent-primary: #8c8070;
+  --accent-gold: #c68a2c;
+  --accent-gold-dark: #a8721e;
+  --accent-dark: #5c5247;
+  --accent-light: #ab9f8f;
+  
+  --text-primary: #2e2925;
+  --text-muted: #5d534b;
+  --text-light: #7e7368;
+  
+  --border-subtle: rgba(140, 128, 112, 0.22);
+  --border-focused: rgba(140, 128, 112, 0.55);
+  
+  --shadow-soft: 0 15px 45px rgba(46, 41, 37, 0.05);
+  --shadow-card: 0 10px 35px rgba(46, 41, 37, 0.06);
+  --shadow-hover: 0 20px 50px rgba(46, 41, 37, 0.12);
+  
+  --font-serif: 'Cormorant Garamond', 'Canela', 'Didot', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  --ease-spa: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-ui: 400ms var(--ease-spa);
+  --transition-slow: 700ms var(--ease-spa);
+  --transition-hero: 1000ms var(--ease-spa);
+}
+
+/* Reset & Base Styling */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.55;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dark);
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.4vw, 3rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+}
+
+p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-ui);
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Common Layout Utilities */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-padding {
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 6rem 0;
+  }
+}
+
+/* Section Header */
+.section-header {
+  margin-bottom: 2.5rem;
+  max-width: 640px;
+}
+.section-header.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.tag-subtitle {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Custom Buttons - Soft Luxury Style */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 0.85rem 1.8rem;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--text-primary);
+  cursor: pointer;
+  transition: transform 300ms var(--ease-spa), background-color 300ms var(--ease-spa), box-shadow 300ms var(--ease-spa);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background-color: #1a1715;
+  box-shadow: 0 8px 20px rgba(46, 41, 37, 0.18);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--text-primary);
+  padding: 0.85rem 1.8rem;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--accent-primary);
+  cursor: pointer;
+  transition: transform 300ms var(--ease-spa), background-color 300ms var(--ease-spa), border-color 300ms var(--ease-spa);
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  background-color: rgba(140, 128, 112, 0.1);
+  border-color: var(--text-primary);
+}
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Nav Underline Animation */
+.nav-link {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 0.4rem 0;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--text-primary);
+  transition: width 350ms var(--ease-spa), left 350ms var(--ease-spa);
+}
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Category Card with Dark Button Banner (#2e2925) matching "Book" button */
+.category-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 400ms var(--ease-spa), box-shadow 400ms var(--ease-spa);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+.category-card-banner {
+  background-color: var(--text-primary); /* Dark espresso/charcoal #2e2925 */
+  color: var(--bg-primary); /* #ede0c8 */
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 300ms ease;
+}
+.category-card:hover .category-card-banner {
+  background-color: #1a1715;
+}
+
+/* Spa Card Hover Lift */
+.spa-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  transition: transform 400ms var(--ease-spa), box-shadow 400ms var(--ease-spa), background-color 400ms var(--ease-spa);
+  box-shadow: var(--shadow-soft);
+}
+.spa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  background-color: var(--bg-card-hover);
+}
+
+/* Featured Badge */
+.featured-badge {
+  background-color: var(--accent-dark);
+  color: var(--bg-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* Image Masking */
+.img-editorial {
+  overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+}
+.img-editorial img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1000ms var(--ease-spa);
+}
+.img-editorial:hover img {
+  transform: scale(1.025);
+}
+
+/* Input Fields */
+.input-spa {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  color: var(--text-primary);
+  transition: border-color 300ms var(--ease-spa), box-shadow 300ms var(--ease-spa);
+}
+.input-spa:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(140, 128, 112, 0.15);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 700ms var(--ease-spa) forwards;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
