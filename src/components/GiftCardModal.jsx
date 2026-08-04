@@ -11,7 +11,7 @@ export default function GiftCardModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const presetAmounts = ['300', '500', '850', '1250'];
+  const presetAmounts = ['500', '800', '1000', '1500'];
 
   const handleOrder = (channel) => {
     setOrdered(true);
@@ -70,7 +70,7 @@ export default function GiftCardModal({ isOpen, onClose }) {
             Give the Gift of Radiance & Serenity
           </h2>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.4rem' }}>
-            Perfect for birthdays, anniversaries, corporate appreciation, or self-care surprises in Accra.
+            Perfect for birthdays, anniversaries, corporate appreciation, or self-care surprises in Accra (valid until two months after purchase).
           </p>
         </div>
 
