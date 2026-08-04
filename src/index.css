@@ -8,27 +8,27 @@
   --bg-glass: rgba(237, 224, 200, 0.96);
   --bg-dark: #231f1c;
   --text-dark-bg: #ede0c8;
-  
+
   --accent-primary: #8c8070;
   --accent-gold: #c68a2c;
   --accent-gold-dark: #a8721e;
   --accent-dark: #5c5247;
   --accent-light: #ab9f8f;
-  
+
   --text-primary: #2e2925;
   --text-muted: #5d534b;
   --text-light: #7e7368;
-  
+
   --border-subtle: rgba(140, 128, 112, 0.22);
   --border-focused: rgba(140, 128, 112, 0.55);
-  
+
   --shadow-soft: 0 15px 45px rgba(46, 41, 37, 0.05);
   --shadow-card: 0 10px 35px rgba(46, 41, 37, 0.06);
   --shadow-hover: 0 20px 50px rgba(46, 41, 37, 0.12);
-  
-  --font-serif: 'Cormorant Garamond', 'Canela', 'Didot', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  
+
+  --font-serif: "Cormorant Garamond", "Canela", "Didot", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
   --ease-spa: cubic-bezier(0.22, 1, 0.36, 1);
   --transition-ui: 400ms var(--ease-spa);
   --transition-slow: 700ms var(--ease-spa);
@@ -36,7 +36,9 @@
 }
 
 /* Reset & Base Styling */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -75,7 +77,11 @@ body {
 }
 
 /* Typography Defaults */
-h1, h2, h3, h4, .font-serif {
+h1,
+h2,
+h3,
+h4,
+.font-serif {
   font-family: var(--font-serif);
   font-weight: 500;
   color: var(--text-primary);
@@ -107,10 +113,37 @@ a {
   transition: all var(--transition-ui);
 }
 
-button, input, textarea, select {
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 2000;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+button,
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  min-height: 44px;
+  min-width: 44px;
 }
 
 /* Accessible focus styling */
@@ -173,7 +206,10 @@ button, input, textarea, select {
   letter-spacing: 0.02em;
   border: 1px solid var(--text-primary);
   cursor: pointer;
-  transition: transform 300ms var(--ease-spa), background-color 300ms var(--ease-spa), box-shadow 300ms var(--ease-spa);
+  transition:
+    transform 300ms var(--ease-spa),
+    background-color 300ms var(--ease-spa),
+    box-shadow 300ms var(--ease-spa);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
@@ -198,7 +234,10 @@ button, input, textarea, select {
   letter-spacing: 0.02em;
   border: 1px solid var(--accent-primary);
   cursor: pointer;
-  transition: transform 300ms var(--ease-spa), background-color 300ms var(--ease-spa), border-color 300ms var(--ease-spa);
+  transition:
+    transform 300ms var(--ease-spa),
+    background-color 300ms var(--ease-spa),
+    border-color 300ms var(--ease-spa);
 }
 .btn-secondary:hover {
   transform: translateY(-2px);
@@ -218,16 +257,19 @@ button, input, textarea, select {
   padding: 0.4rem 0;
 }
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
   width: 0;
   height: 1.5px;
   background-color: var(--text-primary);
-  transition: width 350ms var(--ease-spa), left 350ms var(--ease-spa);
+  transition:
+    width 350ms var(--ease-spa),
+    left 350ms var(--ease-spa);
 }
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
   left: 0;
 }
@@ -238,7 +280,9 @@ button, input, textarea, select {
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   overflow: hidden;
-  transition: transform 400ms var(--ease-spa), box-shadow 400ms var(--ease-spa);
+  transition:
+    transform 400ms var(--ease-spa),
+    box-shadow 400ms var(--ease-spa);
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -270,7 +314,10 @@ button, input, textarea, select {
   background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
-  transition: transform 400ms var(--ease-spa), box-shadow 400ms var(--ease-spa), background-color 400ms var(--ease-spa);
+  transition:
+    transform 400ms var(--ease-spa),
+    box-shadow 400ms var(--ease-spa),
+    background-color 400ms var(--ease-spa);
   box-shadow: var(--shadow-soft);
 }
 .spa-card:hover {
@@ -316,7 +363,9 @@ button, input, textarea, select {
   border: 1px solid var(--border-subtle);
   border-radius: 3px;
   color: var(--text-primary);
-  transition: border-color 300ms var(--ease-spa), box-shadow 300ms var(--ease-spa);
+  transition:
+    border-color 300ms var(--ease-spa),
+    box-shadow 300ms var(--ease-spa);
 }
 .input-spa:focus {
   outline: none;
@@ -327,8 +376,14 @@ button, input, textarea, select {
 
 /* Keyframe Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -337,7 +392,9 @@ button, input, textarea, select {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
