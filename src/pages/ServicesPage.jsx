@@ -8,7 +8,9 @@ export default function ServicesPage({
   activeCategory,
   onCategoryChange,
 }) {
-  const [selectedCategory, setSelectedCategory] = useState(activeCategory || "packages");
+  const [selectedCategory, setSelectedCategory] = useState(
+    activeCategory || "packages",
+  );
 
   useEffect(() => {
     if (activeCategory) {
@@ -96,7 +98,8 @@ export default function ServicesPage({
               }}
             >
               Explore our curated spa packages, skin barrier facials,
-              therapeutic deep tissue massage, and beauty treatments in Ogbojo-Madina, Accra.
+              therapeutic deep tissue massage, and beauty treatments in
+              Ogbojo-Madina, Accra.
             </p>
 
             <a

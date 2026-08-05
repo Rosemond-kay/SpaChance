@@ -11,7 +11,8 @@ export const BRAND = {
     name: "Anita Sekyere",
     title: "Certified Skin Specialist & Beauty Consultant",
     bio: "Founded by certified skin specialist Anita Sekyere, SpaChance provides personalized skin barrier repair, targeted hyperpigmentation treatment, and therapeutic massage in a peaceful East Legon sanctuary.",
-    image: "/assets/founder.jpg",
+    image: "/assets/Anita-Sekyere-SpaChance-Founder.jpeg",
+    fallbackImage: "/assets/founder.jpg",
   },
   positioning:
     "SpaChance is a premium skin and wellness studio in East Legon, Accra, Ghana, specializing in personalized facials, therapeutic massage, skincare, and beauty treatments. Founded by Anita Sekyere, a certified skin specialist and beauty consultant.",

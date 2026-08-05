@@ -131,7 +131,9 @@ const updateDocumentMeta = (page, category) => {
   const ogTitle = document.querySelector('meta[property="og:title"]');
   if (ogTitle) ogTitle.setAttribute("content", meta.title);
 
-  const ogDescription = document.querySelector('meta[property="og:description"]');
+  const ogDescription = document.querySelector(
+    'meta[property="og:description"]',
+  );
   if (ogDescription) ogDescription.setAttribute("content", meta.description);
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
@@ -192,7 +194,10 @@ export default function App() {
       );
     }
 
-    updateDocumentMeta(activePage, activePage === "services" ? serviceCategory : "packages");
+    updateDocumentMeta(
+      activePage,
+      activePage === "services" ? serviceCategory : "packages",
+    );
   }, [activePage, serviceCategory]);
 
   useEffect(() => {

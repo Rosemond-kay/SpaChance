@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Award,
   ShieldCheck,
@@ -11,6 +11,8 @@ import {
 import { BRAND } from "../data/spachanceData";
 
 export default function AboutPage({ onOpenBookModal }) {
+  const [founderImageSrc, setFounderImageSrc] = useState(BRAND.founder.image);
+
   return (
     <div className="about-page">
       {/* 1. Full Viewport Authentic Studio Hero */}
@@ -121,8 +123,13 @@ export default function AboutPage({ onOpenBookModal }) {
               style={{ height: "440px", borderRadius: "6px" }}
             >
               <img
-                src={BRAND.founder.image}
+                src={founderImageSrc}
                 alt="Anita Sekyere - SpaChance Founder"
+                onError={() => {
+                  if (founderImageSrc !== BRAND.founder.fallbackImage) {
+                    setFounderImageSrc(BRAND.founder.fallbackImage);
+                  }
+                }}
               />
             </div>
 
@@ -161,8 +168,9 @@ export default function AboutPage({ onOpenBookModal }) {
                   </strong>
                 </div>
                 <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Certified in cosmetic science, advanced facials for chemical peels, micro-needling, and holistic therapeutic massage for West African skin
-                  profiles.
+                  Certified in cosmetic science, advanced facials for chemical
+                  peels, micro-needling, and holistic therapeutic massage for
+                  West African skin profiles.
                 </p>
               </div>
 
