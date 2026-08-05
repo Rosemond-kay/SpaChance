@@ -178,7 +178,7 @@ export default function HomePage({ setActivePage, onBookService, onOpenGiftModal
               <div
                 key={idx}
                 className="category-card"
-                onClick={() => setActivePage('services')}
+                onClick={() => setActivePage('services', { category: cat.category })}
               >
                 <div className="img-editorial" style={{ height: '250px' }}>
                   <img src={cat.image} alt={cat.title} />

@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar, Check, Sparkles, Gift, ExternalLink } from "lucide-react";
 import { BRAND, SERVICES_CATALOG } from "../data/spachanceData";
 
-export default function ServicesPage({ onBookService, onOpenGiftModal }) {
-  const [activeCategory, setActiveCategory] = useState("packages");
+export default function ServicesPage({
+  onBookService,
+  onOpenGiftModal,
+  activeCategory,
+  onCategoryChange,
+}) {
+  const [selectedCategory, setSelectedCategory] = useState(activeCategory || "packages");
+
+  useEffect(() => {
+    if (activeCategory) {
+      setSelectedCategory(activeCategory);
+    }
+  }, [activeCategory]);
 
   const categories = SERVICES_CATALOG.map((c) => c.category);
   const currentCatalog =
-    SERVICES_CATALOG.find((c) => c.category === activeCategory) ||
+    SERVICES_CATALOG.find((c) => c.category === selectedCategory) ||
     SERVICES_CATALOG[0];
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    if (onCategoryChange) {
+      onCategoryChange(category);
+    }
+  };
 
   return (
     <div className="services-page">
@@ -120,7 +138,7 @@ export default function ServicesPage({ onBookService, onOpenGiftModal }) {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               style={{
                 padding: "0.55rem 1.2rem",
                 borderRadius: "25px",
@@ -129,14 +147,14 @@ export default function ServicesPage({ onBookService, onOpenGiftModal }) {
                     ? "2px solid var(--text-primary)"
                     : "1px solid var(--border-subtle)",
                 backgroundColor:
-                  activeCategory === cat
+                  selectedCategory === cat
                     ? "var(--text-primary)"
                     : "rgba(255, 255, 255, 0.5)",
                 color:
-                  activeCategory === cat
+                  selectedCategory === cat
                     ? "var(--bg-primary)"
                     : "var(--text-primary)",
-                fontWeight: activeCategory === cat ? 600 : 500,
+                fontWeight: selectedCategory === cat ? 600 : 500,
                 fontSize: "0.88rem",
                 cursor: "pointer",
                 transition: "all 300ms ease",
@@ -151,7 +169,7 @@ export default function ServicesPage({ onBookService, onOpenGiftModal }) {
                   size={13}
                   style={{
                     color:
-                      activeCategory === "packages"
+                      selectedCategory === "packages"
                         ? "#ede0c8"
                         : "var(--accent-dark)",
                   }}
@@ -179,7 +197,7 @@ export default function ServicesPage({ onBookService, onOpenGiftModal }) {
             style={{
               display: "grid",
               gridTemplateColumns:
-                activeCategory === "packages"
+                selectedCategory === "packages"
                   ? "repeat(auto-fit, minmax(310px, 1fr))"
                   : "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "1.8rem",
