@@ -161,8 +161,7 @@ export default function AboutPage({ onOpenBookModal }) {
                   </strong>
                 </div>
                 <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Certified in advanced dermo-cosmetics, chemical resurfacing
-                  safety, and holistic therapeutic massage for West African skin
+                  Certified in cosmetic science, advanced facials for chemical peels, micro-needling, and holistic therapeutic massage for West African skin
                   profiles.
                 </p>
               </div>

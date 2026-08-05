@@ -78,8 +78,7 @@ export default function ServicesPage({ onBookService, onOpenGiftModal }) {
               }}
             >
               Explore our curated spa packages, skin barrier facials,
-              therapeutic deep tissue massage, and beauty treatments in East
-              Legon, Accra.
+              therapeutic deep tissue massage, and beauty treatments in Ogbojo-Madina, Accra.
             </p>
 
             <a
@@ -318,7 +317,7 @@ export default function ServicesPage({ onBookService, onOpenGiftModal }) {
                     style={{ padding: "0.65rem 1.1rem", fontSize: "0.84rem" }}
                   >
                     <ExternalLink size={14} />
-                    Book on Fresha
+                    Book
                   </a>
                 </div>
               </div>

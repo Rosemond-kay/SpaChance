@@ -58,7 +58,7 @@ export default function Footer({ setActivePage, onOpenGiftModal }) {
                 marginBottom: "1.5rem",
               }}
             >
-              Premium skin & wellness studio in East Legon, Accra. Certified
+              Premium skin & wellness studio in Ogbojo-Madina, Accra. Certified
               skin specialist care, custom barrier repair facials, and
               therapeutic massage for radiant skin and deep relaxation.
             </p>
@@ -313,7 +313,7 @@ export default function Footer({ setActivePage, onOpenGiftModal }) {
                 <strong style={{ color: "#ede0c8", display: "block" }}>
                   SpaChance Studio
                 </strong>
-                East Legon / North Legon Area, Accra, Ghana
+                Ogbojo/Madina Area, Accra, Ghana
                 <br />
                 <span style={{ display: "block", marginTop: "0.25rem" }}>
                   Phone: {BRAND.whatsappPhone}
@@ -374,7 +374,7 @@ export default function Footer({ setActivePage, onOpenGiftModal }) {
                     color: "#ab9f8f",
                   }}
                 >
-                  WhatsApp Concierge & Bookings
+                  WhatsApp Enquiries & Bookings
                 </span>
               </div>
             </div>
@@ -437,8 +437,7 @@ export default function Footer({ setActivePage, onOpenGiftModal }) {
           }}
         >
           <div>
-            © {new Date().getFullYear()} SpaChance. All Rights Reserved. Founded
-            by Anita Sekyere.
+            © {new Date().getFullYear()} SpaChance. All Rights Reserved.
           </div>
           <div>
             <span>Healthy Skin. Deep Relaxation. Lasting Confidence.</span>

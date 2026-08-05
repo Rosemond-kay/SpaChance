@@ -110,7 +110,7 @@ export default function HomePage({ setActivePage, onBookService, onOpenGiftModal
                 textShadow: '0 2px 10px rgba(0,0,0,0.6)'
               }}
             >
-              Personalized skin barrier maintenance, therapeutic massage, and curated spa packages in East Legon, Accra. Guided by certified specialist Anita Sekyere.
+              Personalized skin barrier maintenance, therapeutic massage, and curated spa packages in Ogbojo-Madina, Accra. Guided by certified specialist Anita Sekyere.
             </p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
@@ -430,7 +430,7 @@ export default function HomePage({ setActivePage, onBookService, onOpenGiftModal
                 Give the SpaChance Experience
               </h2>
               <p style={{ marginBottom: '1.2rem', fontSize: '0.92rem' }}>
-                Digital and physical SpaChance Gift Cards for any treatment or package in East Legon.
+                Digital and physical SpaChance Gift Cards for any treatment or package in Ogbojo-Madina, Accra.
               </p>
               <button onClick={onOpenGiftModal} className="btn-primary">
                 <Sparkles size={15} /> Purchase Gift Card

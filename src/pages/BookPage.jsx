@@ -63,7 +63,7 @@ export default function BookPage({ onOpenGiftModal }) {
                 textShadow: '0 2px 10px rgba(0,0,0,0.6)'
               }}
             >
-              Reserve your quiet luxury facial, bodywork, or spa package online via Fresha or directly on WhatsApp.
+              Reserve your quiet luxury facial, bodywork, or spa package online or directly on WhatsApp.
             </p>
 
             <a
@@ -74,7 +74,7 @@ export default function BookPage({ onOpenGiftModal }) {
               style={{ backgroundColor: '#ede0c8', color: '#2e2925', borderColor: '#ede0c8', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}
             >
               <Calendar size={17} />
-              Open Live Fresha Calendar
+              Open Live Calendar
             </a>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function BookPage({ onOpenGiftModal }) {
                 style={{ width: '100%', padding: '1rem', justifyContent: 'center', fontSize: '0.95rem' }}
               >
                 <ExternalLink size={16} />
-                Open Live Fresha Calendar
+                Open Live Calendar
               </a>
             </div>
 
@@ -210,7 +210,7 @@ export default function BookPage({ onOpenGiftModal }) {
               </div>
 
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '0.8rem' }}>
-                Located in the quiet <strong>East Legon / North Legon Area</strong>, Accra, Ghana. Ample private parking.
+                Located in the quiet <strong>Ogbojo / Madina Area</strong>, Accra, Ghana. Ample private parking.
               </p>
 
               <div style={{ backgroundColor: '#e5d7be', padding: '0.85rem', borderRadius: '4px', fontSize: '0.82rem' }}>

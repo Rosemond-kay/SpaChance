@@ -17,7 +17,7 @@ export default function ContactPage() {
               guidance.
             </h1>
             <p>
-              We’re based in East Legon, Accra, and our team is happy to help
+              We’re based in Ogbojo-Madina, Accra, and our team is happy to help
               you plan your visit.
             </p>
           </div>
@@ -43,7 +43,7 @@ export default function ContactPage() {
                 </h2>
               </div>
               <p style={{ marginBottom: "0.4rem" }}>
-                East Legon / North Legon Area, Accra, Ghana
+                Ogbojo-Madina Area, Accra, Ghana
               </p>
               <a
                 href={BRAND.googleMapsUrl}

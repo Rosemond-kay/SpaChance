@@ -102,7 +102,7 @@ export const SPA_PACKAGES = [
     popular: false,
     badge: "Founder's Choice",
     description:
-      "Formulated by Anita Sekyere to repair compromised skin barriers, clear acne congestion, and restore glow.",
+      "Formulated by our expert founder to repair compromised skin barriers, clear acne congestion, and restore glow.",
     includes: [
       "Digital Skin Consultation & Diagnostics",
       "Deep Cleanse & Gentle Exfoliation",
@@ -379,7 +379,34 @@ export const SERVICES_CATALOG = [
     category: "brows & lash",
     title: "Brows & Lash Treatments",
     description:
-      "Precision brow shaping, tinting, microblading, and waxing services for polished definition.",
+      "Precision brow shaping, tinting, and microblading services for polished definition.",
+    image: "/assets/hero_home_real.jpg",
+    items: [
+      {
+        id: "brow-3",
+        title: "Microblading - Touch up",
+        duration: "1h",
+        price: "¢500.00",
+        description:
+          "Semi-permanent cosmetic tattooing technique used to enhance the appearance of the eyebrows.",
+        freshaUrl: BRAND.freshaBookingUrl,
+      },
+      {
+        id: "brow-4",
+        title: "Microblading - New Brows",
+        duration: "2h",
+        price: "¢800.00",
+        description:
+          "Semi-permanent cosmetic tattooing technique used to enhance the appearance of the eyebrows.",
+        freshaUrl: BRAND.freshaBookingUrl,
+      },
+    ],
+  },
+  {
+    category: "waxing",
+    title: "Waxing Services",
+    description:
+      "Precise waxing for brows, body, and intimate areas with comfort-focused care.",
     image: "/assets/hero_home_real.jpg",
     items: [
       {
@@ -397,24 +424,6 @@ export const SERVICES_CATALOG = [
         duration: "30m",
         price: "¢80.00",
         description: "Brow grooming only.",
-        freshaUrl: BRAND.freshaBookingUrl,
-      },
-      {
-        id: "brow-3",
-        title: "Microblading - Touch up",
-        duration: "1h",
-        price: "¢500.00",
-        description:
-          "Semi-permanent cosmetic tattooing technique used to enhance the appearance of the eyebrows.",
-        freshaUrl: BRAND.freshaBookingUrl,
-      },
-      {
-        id: "brow-4",
-        title: "Microblading - New Brows",
-        duration: "2h",
-        price: "¢800.00",
-        description:
-          "Semi-permanent cosmetic tattooing technique used to enhance the appearance of the eyebrows.",
         freshaUrl: BRAND.freshaBookingUrl,
       },
       {
