@@ -179,7 +179,7 @@ export default function AboutPage({ onOpenBookModal }) {
                 className="btn-primary"
               >
                 <Calendar size={16} />
-                Book Consultation on WhatsApp
+                Book Consultation
               </a>
             </div>
           </div>

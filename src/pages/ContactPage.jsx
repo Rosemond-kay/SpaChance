@@ -91,7 +91,7 @@ export default function ContactPage() {
                 {BRAND.whatsappPhone}
               </a>
               <span style={{ color: "var(--text-muted)" }}>
-                WhatsApp concierge and appointment bookings
+                Appointment bookings
               </span>
             </div>
 
@@ -141,7 +141,7 @@ export default function ContactPage() {
                     fontSize: "1.4rem",
                   }}
                 >
-                  Book Online
+                  Book
                 </h2>
               </div>
               <a

@@ -1,14 +1,13 @@
 import React from "react";
 import {
   Calendar,
-  MessageCircle,
-  MapPin,
   Clock,
-  CheckCircle2,
-  ExternalLink,
+  User,
+  Gift,
+  Lock,
+  MapPin
 } from "lucide-react";
 import { BRAND, buildWhatsAppBookingUrl } from "../data/spachanceData";
-import { WhatsAppLogo } from "../components/SocialLogos";
 
 export default function BookPage({ onOpenGiftModal }) {
   return (
@@ -96,267 +95,250 @@ export default function BookPage({ onOpenGiftModal }) {
               }}
             >
               <Calendar size={17} />
-              Book via WhatsApp Now
+              Book Now
             </a>
           </div>
         </div>
       </section>
 
-      {/* WhatsApp Conversion Booking Path */}
+      {/* WhatsApp Conversion Booking Section */}
       <section
         className="section-padding"
         style={{ backgroundColor: "var(--bg-primary)" }}
       >
-        <div className="container">
+        <div className="container" style={{ maxWidth: "980px" }}>
+          {/* Unified Booking & Inquire Card matching screenshot design */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "2rem",
-              marginBottom: "3rem",
+              backgroundColor: "#ffffff",
+              border: "1px solid rgba(140, 128, 112, 0.2)",
+              borderRadius: "16px",
+              padding: "clamp(1.8rem, 4.5vw, 3.2rem)",
+              boxShadow: "0 10px 40px rgba(46, 41, 37, 0.05)",
+              marginBottom: "3.5rem"
             }}
           >
-            {/* Primary Path: WhatsApp Instant Custom Message */}
-            <div
-              className="spa-card"
-              style={{
-                padding: "2rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                border: "2px solid var(--accent-dark)",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    marginBottom: "0.8rem",
-                  }}
-                >
-                  <WhatsAppLogo size={22} />
-                  <span className="featured-badge">Primary Booking Path</span>
-                </div>
-                <h2
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "1.6rem",
-                    marginBottom: "0.6rem",
-                  }}
-                >
-                  Instant WhatsApp Booking
-                </h2>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "var(--text-muted)",
-                    marginBottom: "1.2rem",
-                  }}
-                >
-                  Message Anita & the SpaChance team directly on WhatsApp to
-                  choose your service, share your preferred date and time, and
-                  receive rapid confirmation.
-                </p>
-
-                <ul
-                  style={{
-                    listStyle: "none",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  <li
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.4rem",
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    <CheckCircle2
-                      size={15}
-                      style={{ color: "var(--accent-dark)" }}
-                    />{" "}
-                    Pre-filled service message & date prompt
-                  </li>
-                  <li
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.4rem",
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    <CheckCircle2
-                      size={15}
-                      style={{ color: "var(--accent-dark)" }}
-                    />{" "}
-                    Personal consultation with Anita Sekyere
-                  </li>
-                  <li
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.4rem",
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    <CheckCircle2
-                      size={15}
-                      style={{ color: "var(--accent-dark)" }}
-                    />{" "}
-                    Flexible scheduling & instant confirmation
-                  </li>
-                </ul>
-              </div>
-
-              <a
-                href={buildWhatsAppBookingUrl("a SpaChance treatment")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
+            {/* Top Badge */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.2rem" }}>
+              <img
+                src="/assets/whatsapp_official_icon.png"
+                alt="WhatsApp"
+                style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+              />
+              <span
                 style={{
-                  width: "100%",
-                  padding: "1rem",
-                  justifyContent: "center",
-                  fontSize: "0.95rem",
-                  backgroundColor: "#25D366",
-                  borderColor: "#25D366",
+                  backgroundColor: "#2e2925",
                   color: "#ffffff",
+                  padding: "0.38rem 0.9rem",
+                  borderRadius: "20px",
+                  fontSize: "0.72rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase"
                 }}
               >
-                <ExternalLink size={16} />
-                Send Booking Message on WhatsApp
-              </a>
+                BOOK & INQUIRE
+              </span>
             </div>
 
-            {/* Direct Line & Inquiries */}
-            <div
-              className="spa-card"
+            {/* Headline */}
+            <h2
               style={{
-                padding: "2rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(1.8rem, 3.4vw, 2.6rem)",
+                color: "#2e2925",
+                marginBottom: "1rem",
+                fontWeight: 500,
+                lineHeight: "1.2"
               }}
             >
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    marginBottom: "0.8rem",
-                  }}
-                >
-                  <img
-                    src="/assets/whatsapp_official_icon.png"
-                    alt="WhatsApp"
-                    style={{
-                      width: "24px",
-                      height: "24px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      color: "var(--accent-dark)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    Direct Concierge
-                  </span>
-                </div>
-                <h2
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "1.6rem",
-                    marginBottom: "0.6rem",
-                  }}
-                >
-                  Custom Package Inquiries
-                </h2>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "var(--text-muted)",
-                    marginBottom: "1.2rem",
-                  }}
-                >
-                  Need advice on customized barrier repair facials, bridal
-                  packages, or gift vouchers? Reach out directly.
-                </p>
+              Book Instantly or Inquire Directly
+            </h2>
 
+            {/* Description */}
+            <div style={{ color: "#4a423a", fontSize: "1.02rem", lineHeight: "1.6", marginBottom: "2.4rem", maxWidth: "640px" }}>
+              <p style={{ marginBottom: "0.3rem" }}>
+                Message Anita & the SpaChance team on WhatsApp to book your service, ask about custom packages, or get gift vouchers.
+              </p>
+              <p>
+                Share your preferred date and time and receive a rapid confirmation.
+              </p>
+            </div>
+
+            {/* 4 Feature Items Row */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "1.8rem",
+                alignItems: "center",
+                marginBottom: "2rem"
+              }}
+            >
+              {/* Feature 1 */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
                 <div
                   style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.5)",
-                    padding: "1rem",
-                    borderRadius: "4px",
-                    border: "1px solid var(--border-subtle)",
-                    marginBottom: "1.5rem",
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "50%",
+                    backgroundColor: "#f5ead6",
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.75rem",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    color: "#4a3e31"
                   }}
                 >
-                  <img
-                    src="/assets/whatsapp_official_icon.png"
-                    alt="WhatsApp"
-                    style={{
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <div>
-                    <span
-                      style={{
-                        fontSize: "0.78rem",
-                        color: "var(--text-light)",
-                        display: "block",
-                      }}
-                    >
-                      WhatsApp Direct Line:
-                    </span>
-                    <strong
-                      style={{
-                        fontSize: "1.1rem",
-                        fontFamily: "var(--font-serif)",
-                        color: "var(--text-primary)",
-                      }}
-                    >
-                      {BRAND.whatsappPhone}
-                    </strong>
-                  </div>
+                  <Clock size={22} />
                 </div>
+                <span style={{ fontSize: "0.9rem", color: "#2e2925", fontWeight: 500, lineHeight: "1.35" }}>
+                  Pre-filled message & date prompt
+                </span>
               </div>
 
-              <a
-                href={`${BRAND.whatsappUrl}?text=${encodeURIComponent("Hi SpaChance! I have a question about booking an appointment with Anita.")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-                style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  padding: "1rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                }}
-              >
-                <MessageCircle size={16} />
-                <span>Message Concierge</span>
-              </a>
+              {/* Feature 2 */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "50%",
+                    backgroundColor: "#f5ead6",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    color: "#4a3e31"
+                  }}
+                >
+                  <User size={22} />
+                </div>
+                <span style={{ fontSize: "0.9rem", color: "#2e2925", fontWeight: 500, lineHeight: "1.35" }}>
+                  Personal consultation with an expert
+                </span>
+              </div>
+
+              {/* Feature 3 */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "50%",
+                    backgroundColor: "#f5ead6",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    color: "#4a3e31"
+                  }}
+                >
+                  <Calendar size={22} />
+                </div>
+                <span style={{ fontSize: "0.9rem", color: "#2e2925", fontWeight: 500, lineHeight: "1.35" }}>
+                  Flexible scheduling & instant confirmation
+                </span>
+              </div>
+
+              {/* Feature 4 */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "50%",
+                    backgroundColor: "#f5ead6",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    color: "#4a3e31"
+                  }}
+                >
+                  <Gift size={22} />
+                </div>
+                <span style={{ fontSize: "0.9rem", color: "#2e2925", fontWeight: 500, lineHeight: "1.35" }}>
+                  Custom packages & gift vouchers
+                </span>
+              </div>
+            </div>
+
+            <hr style={{ border: "none", borderTop: "1px solid rgba(140, 128, 112, 0.2)", margin: "2rem 0 1.8rem 0" }} />
+
+            {/* Direct Line Box */}
+            <div
+              style={{
+                backgroundColor: "#f8f4ed",
+                border: "1px solid rgba(140, 128, 112, 0.2)",
+                borderRadius: "12px",
+                padding: "1.1rem 1.5rem",
+                marginBottom: "1.2rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem"
+              }}
+            >
+              <img
+                src="/assets/whatsapp_official_icon.png"
+                alt="WhatsApp"
+                style={{ width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+              />
+              <div>
+                <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "#2e2925", display: "block" }}>
+                  WhatsApp Direct Line:
+                </span>
+                <span style={{ fontSize: "1.1rem", fontWeight: 500, color: "#2e2925", fontFamily: "var(--font-sans)" }}>
+                  {BRAND.whatsappPhone}
+                </span>
+              </div>
+            </div>
+
+            {/* Primary Green Action Button */}
+            <a
+              href={buildWhatsAppBookingUrl("a SpaChance service or package")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: "100%",
+                backgroundColor: "#169e4d",
+                color: "#ffffff",
+                padding: "1.15rem",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.65rem",
+                fontWeight: 600,
+                fontSize: "1.05rem",
+                textDecoration: "none",
+                transition: "background-color 300ms ease, transform 200ms ease",
+                boxShadow: "0 4px 15px rgba(22, 158, 77, 0.25)"
+              }}
+              className="whatsapp-main-btn"
+            >
+              <img
+                src="/assets/whatsapp_official_icon.png"
+                alt="WhatsApp"
+                style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+              />
+              <span>Message on WhatsApp to Book or Inquire</span>
+            </a>
+
+            {/* Security Footer Note */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.4rem",
+                fontSize: "0.85rem",
+                color: "#6e6358",
+                marginTop: "0.9rem"
+              }}
+            >
+              <Lock size={15} style={{ color: "#6e6358" }} />
+              <span>Your details & conversations are private and secure.</span>
             </div>
           </div>
 
@@ -466,6 +448,13 @@ export default function BookPage({ onOpenGiftModal }) {
             </div>
           </div>
         </div>
+
+        <style>{`
+          .whatsapp-main-btn:hover {
+            background-color: #128641 !important;
+            transform: translateY(-2px);
+          }
+        `}</style>
       </section>
     </div>
   );

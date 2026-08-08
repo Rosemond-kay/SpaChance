@@ -197,7 +197,7 @@ export default function Footer({ setActivePage, onOpenGiftModal }) {
                     fontSize: "0.88rem",
                   }}
                 >
-                  About Anita & Studio
+                  About Founder & Studio
                 </button>
               </li>
               <li>
@@ -313,7 +313,7 @@ export default function Footer({ setActivePage, onOpenGiftModal }) {
                 <strong style={{ color: "#ede0c8", display: "block" }}>
                   SpaChance Studio
                 </strong>
-                Ogbojo/Madina Area, Accra, Ghana
+                Passion Hill Street, Ogbojo-Madina, Accra, Ghana
                 <br />
                 <span style={{ display: "block", marginTop: "0.25rem" }}>
                   Phone: {BRAND.whatsappPhone}

@@ -154,7 +154,7 @@ export default function HomePage({
                 }}
               >
                 <Calendar size={17} />
-                Book via WhatsApp
+                Book
               </a>
 
               <button
