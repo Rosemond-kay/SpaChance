@@ -380,6 +380,18 @@ export const SERVICES_CATALOG = [
           "GHS 500.00",
         ),
       },
+      {
+        id: "msg-3",
+        title: "Hot Stone Massage",
+        duration: "1 hr",
+        price: "GHS 500",
+        description:
+          "A therapeutic massage using smooth heated stones to ease deep muscle tension, improve circulation, and promote total body relaxation.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Hot Stone Massage",
+          "GHS 500",
+        ),
+      },
     ],
   },
   {
@@ -532,6 +544,18 @@ export const SERVICES_CATALOG = [
         whatsappUrl: buildWhatsAppBookingUrl(
           "Microblading - New Brows",
           "GHS 800.00",
+        ),
+      },
+      {
+        id: "brow-lamination",
+        title: "Brow Lamination",
+        duration: "1 hr",
+        price: "GHS 200",
+        description:
+          "A professional brow treatment that sets and aligns brow hairs for a fuller, slicked-up, and perfectly groomed appearance.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Brow Lamination",
+          "GHS 200",
         ),
       },
     ],

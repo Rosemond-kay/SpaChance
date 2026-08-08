@@ -96,30 +96,29 @@ export default function ServicesPage({ activeCategory: initialCategory, onBookSe
         </div>
       </section>
 
-      {/* 2. Category Filter Tabs - Mobile Responsive Bar */}
+      {/* 2. Category Filter Tabs - Fully Mobile Responsive Scroll Bar */}
       <section className="category-pills-bar">
-        <div className="container category-pills-container">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`category-pill-btn ${activeCategory === cat ? "active" : ""}`}
-            >
-              {cat === "packages" && (
-                <Sparkles
-                  size={13}
-                  style={{
-                    color:
-                      activeCategory === "packages"
-                        ? "#ede0c8"
-                        : "var(--accent-dark)",
-                    flexShrink: 0
-                  }}
-                />
-              )}
-              <span>{cat}</span>
-            </button>
-          ))}
+        <div className="category-pills-scroll-wrapper">
+          <div className="category-pills-track">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`category-pill-btn ${activeCategory === cat ? "active" : ""}`}
+              >
+                {cat === "packages" && (
+                  <Sparkles
+                    size={14}
+                    style={{
+                      color: activeCategory === "packages" ? "#ede0c8" : "var(--accent-dark)",
+                      flexShrink: 0
+                    }}
+                  />
+                )}
+                <span>{cat}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -323,54 +322,78 @@ export default function ServicesPage({ activeCategory: initialCategory, onBookSe
           z-index: 90;
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
           transition: top 300ms ease;
+          width: 100%;
+          overflow: hidden;
         }
-        .category-pills-container {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          padding: 0.85rem 1rem;
+
+        .category-pills-scroll-wrapper {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
           overflow-x: auto;
+          overflow-y: hidden;
           -webkit-overflow-scrolling: touch;
           scrollbar-width: none;
           -ms-overflow-style: none;
+          padding: 0.75rem 1rem;
+          box-sizing: border-box;
         }
-        .category-pills-container::-webkit-scrollbar {
+
+        .category-pills-scroll-wrapper::-webkit-scrollbar {
           display: none;
         }
 
+        .category-pills-track {
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+          gap: 0.6rem !important;
+          width: max-content !important;
+          min-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
         .category-pill-btn {
-          padding: 0.55rem 1.2rem;
-          border-radius: 25px;
-          border: 1px solid var(--border-subtle);
-          background-color: rgba(255, 255, 255, 0.55);
-          color: var(--text-primary);
-          font-weight: 500;
-          font-size: 0.88rem;
-          cursor: pointer;
-          transition: all 300ms ease;
-          white-space: nowrap;
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-          text-transform: capitalize;
-          flex-shrink: 0;
+          flex: 0 0 auto !important;
+          flex-shrink: 0 !important;
+          width: auto !important;
+          min-width: max-content !important;
+          height: 38px !important;
+          min-height: 38px !important;
+          padding: 0 1.1rem !important;
+          border-radius: 20px !important;
+          border: 1px solid var(--border-subtle) !important;
+          background-color: rgba(255, 255, 255, 0.65) !important;
+          color: var(--text-primary) !important;
+          font-weight: 500 !important;
+          font-size: 0.88rem !important;
+          cursor: pointer !important;
+          transition: all 250ms ease !important;
+          white-space: nowrap !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 0.4rem !important;
+          text-transform: capitalize !important;
+          box-sizing: border-box !important;
         }
 
         .category-pill-btn:hover {
-          background-color: rgba(255, 255, 255, 0.85);
+          background-color: rgba(255, 255, 255, 0.9) !important;
         }
 
         .category-pill-btn.active {
-          border: 2px solid var(--text-primary);
-          background-color: var(--text-primary);
-          color: var(--bg-primary);
-          font-weight: 600;
-          box-shadow: 0 4px 12px rgba(46, 41, 37, 0.15);
+          border: 2px solid var(--text-primary) !important;
+          background-color: var(--text-primary) !important;
+          color: var(--bg-primary) !important;
+          font-weight: 600 !important;
+          box-shadow: 0 4px 12px rgba(46, 41, 37, 0.18) !important;
         }
 
         @media (min-width: 901px) {
-          .category-pills-container {
-            justify-content: center;
+          .category-pills-track {
+            justify-content: center !important;
           }
         }
 
@@ -381,14 +404,18 @@ export default function ServicesPage({ activeCategory: initialCategory, onBookSe
         }
 
         @media (max-width: 900px) {
-          .category-pills-container {
+          .category-pills-scroll-wrapper {
+            padding: 0.65rem 0.8rem !important;
+          }
+          .category-pills-track {
+            gap: 0.5rem !important;
             justify-content: flex-start !important;
-            padding: 0.75rem 0.8rem !important;
-            gap: 0.45rem !important;
           }
           .category-pill-btn {
-            padding: 0.45rem 0.85rem !important;
-            font-size: 0.82rem !important;
+            height: 36px !important;
+            min-height: 36px !important;
+            padding: 0 0.95rem !important;
+            font-size: 0.83rem !important;
           }
         }
 
