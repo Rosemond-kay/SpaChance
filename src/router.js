@@ -1,8 +1,34 @@
+// SpaChance Client-Side Router Helper
+// Handles clean, shareable URLs for Pages, Blog Slugs, and Service Categories
+
+const CATEGORY_SLUG_MAP = {
+  packages: "packages",
+  "skin consultation": "skin-consultation",
+  facials: "facials",
+  massage: "massage",
+  "pedicure & manicure": "pedicure-and-manicure",
+  makeup: "makeup",
+  "brows & lash": "brows-and-lash",
+  waxing: "waxing",
+};
+
+// Reverse map: URL slug -> Category name in catalog
+const SLUG_TO_CATEGORY_MAP = Object.entries(CATEGORY_SLUG_MAP).reduce(
+  (acc, [catName, slug]) => {
+    acc[slug] = catName;
+    return acc;
+  },
+  {},
+);
+
 const getPageFromPath = (pathname = "/") => {
   const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
 
   if (normalizedPath.startsWith("/blog/")) {
     return "blog";
+  }
+  if (normalizedPath.startsWith("/services/")) {
+    return "services";
   }
 
   switch (normalizedPath) {
@@ -34,9 +60,25 @@ const getBlogSlugFromPath = (pathname = "/") => {
   return normalizedPath.slice("/blog/".length) || null;
 };
 
-const getCategoryFromSearch = (search = "") => {
+const getCategoryFromPathAndSearch = (pathname = "/", search = "") => {
+  const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
+  
+  if (normalizedPath.startsWith("/services/")) {
+    const slug = normalizedPath.slice("/services/".length);
+    if (SLUG_TO_CATEGORY_MAP[slug]) {
+      return SLUG_TO_CATEGORY_MAP[slug];
+    }
+  }
+
   const params = new URLSearchParams(search);
-  return params.get("category") || "packages";
+  const searchCat = params.get("category");
+  if (searchCat) {
+    // Handle query param if passed e.g. ?category=facials or ?category=pedicure%20%26%20manicure
+    if (CATEGORY_SLUG_MAP[searchCat]) return searchCat;
+    if (SLUG_TO_CATEGORY_MAP[searchCat]) return SLUG_TO_CATEGORY_MAP[searchCat];
+  }
+
+  return "packages";
 };
 
 const getPageStateFromLocation = (location = window.location) => {
@@ -45,13 +87,15 @@ const getPageStateFromLocation = (location = window.location) => {
   );
   const targetUrl = redirectParam
     ? new URL(redirectParam, window.location.origin)
-    : new URL(location.href || "https://example.com/");
+    : new URL(location.href || "https://spachance.com/");
 
   const page = getPageFromPath(targetUrl.pathname);
   const blogSlug =
     page === "blog" ? getBlogSlugFromPath(targetUrl.pathname) : null;
   const category =
-    page === "services" ? getCategoryFromSearch(targetUrl.search) : "packages";
+    page === "services"
+      ? getCategoryFromPathAndSearch(targetUrl.pathname, targetUrl.search)
+      : "packages";
 
   return { page, category, blogSlug };
 };
@@ -62,50 +106,42 @@ const buildRoute = (
   blogSlug = null,
   baseUrl = window.location.href,
 ) => {
+  if (page === "blog") {
+    return blogSlug ? `/blog/${encodeURIComponent(blogSlug)}` : "/blog";
+  }
+
+  if (page === "services") {
+    const catSlug = CATEGORY_SLUG_MAP[category] || "packages";
+    return catSlug === "packages" ? "/services" : `/services/${catSlug}`;
+  }
+
   const routeMap = {
     home: "/",
     about: "/about",
-    services: "/services",
-    blog: "/blog",
     book: "/book",
     contact: "/contact",
     privacy: "/privacy",
     terms: "/terms",
   };
 
-  const baseRoute = routeMap[page] || "/";
-
-  if (page === "blog") {
-    return blogSlug ? `/blog/${encodeURIComponent(blogSlug)}` : "/blog";
-  }
-
-  if (page !== "services") {
-    return baseRoute;
-  }
-
-  const url = new URL(baseUrl || "https://example.com/");
-  url.pathname = "/services";
-
-  if (category && category !== "packages") {
-    url.searchParams.set("category", category);
-  } else {
-    url.searchParams.delete("category");
-  }
-
-  return `${url.pathname}${url.search}`;
+  return routeMap[page] || "/";
 };
 
 export {
+  CATEGORY_SLUG_MAP,
+  SLUG_TO_CATEGORY_MAP,
   getPageFromPath,
   getBlogSlugFromPath,
-  getCategoryFromSearch,
+  getCategoryFromPathAndSearch,
   getPageStateFromLocation,
   buildRoute,
 };
 export default {
+  CATEGORY_SLUG_MAP,
+  SLUG_TO_CATEGORY_MAP,
   getPageFromPath,
   getBlogSlugFromPath,
-  getCategoryFromSearch,
+  getCategoryFromPathAndSearch,
   getPageStateFromLocation,
   buildRoute,
 };

@@ -1,10 +1,24 @@
 import React, { useState } from "react";
-import { Calendar, Check, Sparkles, Gift, ExternalLink } from "lucide-react";
-import { BRAND, SERVICES_CATALOG, buildWhatsAppBookingUrl } from "../data/spachanceData";
+import { Calendar, Check, Sparkles, Gift, ExternalLink, AlertCircle } from "lucide-react";
+import { BRAND, SERVICES_CATALOG, buildWhatsAppBookingUrl, buildWhatsAppConsultationUrl } from "../data/spachanceData";
 
-export default function ServicesPage({ activeCategory: initialCategory, onBookService, onOpenGiftModal }) {
+export default function ServicesPage({ activeCategory: initialCategory, onCategoryChange, onBookService, onOpenGiftModal }) {
   const categories = SERVICES_CATALOG.map((c) => c.category);
   const [activeCategory, setActiveCategory] = useState(initialCategory || categories[0] || "packages");
+
+  // Keep internal state in sync with prop if changed externally
+  React.useEffect(() => {
+    if (initialCategory && initialCategory !== activeCategory) {
+      setActiveCategory(initialCategory);
+    }
+  }, [initialCategory]);
+
+  const handleCategoryClick = (cat) => {
+    setActiveCategory(cat);
+    if (onCategoryChange) {
+      onCategoryChange(cat);
+    }
+  };
 
   const currentCatalog =
     SERVICES_CATALOG.find((c) => c.category === activeCategory) || SERVICES_CATALOG[0];
@@ -103,7 +117,7 @@ export default function ServicesPage({ activeCategory: initialCategory, onBookSe
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryClick(cat)}
                 className={`category-pill-btn ${activeCategory === cat ? "active" : ""}`}
               >
                 {cat === "packages" && (
@@ -149,143 +163,328 @@ export default function ServicesPage({ activeCategory: initialCategory, onBookSe
               gap: "1.8rem"
             }}
           >
-            {currentCatalog.items.map((item) => (
-              <div
-                key={item.id}
-                className="spa-card"
-                style={{
-                  padding: "1.6rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  border: item.popular
-                    ? "2px solid var(--accent-dark)"
-                    : "1px solid var(--border-subtle)"
-                }}
-              >
-                <div>
-                  {item.badge && (
-                    <span
-                      className="featured-badge"
-                      style={{ marginBottom: "0.6rem" }}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
-                  <h3
+            {currentCatalog.items.map((item) => {
+              if (item.isUmbrella) {
+                return (
+                  <div
+                    key={item.id}
+                    className="spa-card umbrella-card"
                     style={{
-                      fontFamily: "var(--font-serif)",
-                      fontSize: "1.35rem",
-                      marginBottom: "0.5rem"
+                      gridColumn: "1 / -1",
+                      padding: "clamp(1.6rem, 3.5vw, 2.5rem)",
+                      border: "2px solid var(--accent-dark)",
+                      backgroundColor: "#fffdfa",
+                      boxShadow: "0 8px 30px rgba(46, 41, 37, 0.08)"
                     }}
                   >
-                    {item.title}
-                  </h3>
+                    {/* Umbrella Header */}
+                    <div style={{ marginBottom: "1.5rem" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.6rem" }}>
+                        <span className="featured-badge">{item.badge}</span>
+                        <span style={{ fontSize: "0.78rem", color: "var(--accent-dark)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                          Protocol Treatment
+                        </span>
+                      </div>
+                      <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem, 3vw, 2.4rem)", marginBottom: "0.8rem", color: "#2e2925" }}>
+                        {item.title}
+                      </h3>
+                      <p style={{ fontSize: "0.98rem", color: "#4a423a", lineHeight: "1.68", marginBottom: "1.2rem", maxWidth: "880px" }}>
+                        {item.description}
+                      </p>
 
-                  <p
-                    style={{
-                      fontSize: "0.88rem",
-                      color: "var(--text-muted)",
-                      marginBottom: "1rem"
-                    }}
-                  >
-                    {item.description}
-                  </p>
+                      {/* What Clients Can Expect List */}
+                      {item.expectations && item.expectations.length > 0 && (
+                        <div style={{ backgroundColor: "#f9f6f0", padding: "1rem 1.2rem", borderRadius: "6px", marginBottom: "1.2rem", border: "1px solid rgba(140, 128, 112, 0.15)" }}>
+                          <span style={{ fontSize: "0.78rem", fontWeight: 700, textTransform: "uppercase", color: "var(--accent-dark)", display: "block", marginBottom: "0.5rem", letterSpacing: "0.06em" }}>
+                            WHAT CLIENTS CAN EXPECT:
+                          </span>
+                          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.45rem" }}>
+                            {item.expectations.map((exp, i) => (
+                              <li key={i} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontSize: "0.86rem", color: "#2e2925" }}>
+                                <Check size={14} style={{ color: "var(--accent-dark)", flexShrink: 0 }} />
+                                <span>{exp}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
-                  {item.includes && (
+                      {/* Mandatory Notice Box */}
+                      {item.notice && (
+                        <div
+                          style={{
+                            backgroundColor: "#f5ead6",
+                            borderLeft: "4px solid var(--accent-dark)",
+                            padding: "0.9rem 1.2rem",
+                            borderRadius: "4px",
+                            color: "#382a1d",
+                            fontSize: "0.9rem",
+                            fontWeight: 600,
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.6rem"
+                          }}
+                        >
+                          <AlertCircle size={18} style={{ color: "var(--accent-dark)", flexShrink: 0 }} />
+                          <span>{item.notice}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Sub-Services Options Header */}
+                    <div style={{ marginTop: "2rem", marginBottom: "1.2rem", borderTop: "1px solid var(--border-subtle)", paddingTop: "1.5rem" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.6rem" }}>
+                        <div>
+                          <h4 style={{ fontFamily: "var(--font-serif)", fontSize: "1.4rem", color: "#2e2925", margin: 0, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                            <span>Options</span>
+                          </h4>
+                        </div>
+                        <span style={{ fontSize: "0.88rem", color: "var(--accent-dark)", fontWeight: 600, backgroundColor: "#f8f3ea", padding: "0.35rem 0.85rem", borderRadius: "20px" }}>
+                          Price: {item.price}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Sub-Services Grid */}
                     <div
                       style={{
-                        backgroundColor: "rgba(255, 255, 255, 0.4)",
-                        padding: "0.85rem",
-                        borderRadius: "4px",
-                        marginBottom: "1rem"
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                        gap: "1.4rem"
                       }}
                     >
-                      <span
-                        style={{
-                          fontSize: "0.72rem",
-                          fontWeight: 600,
-                          textTransform: "uppercase",
-                          color: "var(--accent-dark)",
-                          display: "block",
-                          marginBottom: "0.3rem"
-                        }}
-                      >
-                        Included:
-                      </span>
-                      <ul
-                        style={{
-                          listStyle: "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "0.3rem"
-                        }}
-                      >
-                        {item.includes.map((inc, i) => (
-                          <li
-                            key={i}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "0.4rem",
-                              fontSize: "0.82rem"
-                            }}
-                          >
-                            <Check
-                              size={13}
-                              style={{ color: "var(--accent-dark)" }}
-                            />{" "}
-                            {inc}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                      {item.subServices.map((sub) => (
+                        <div
+                          key={sub.id}
+                          style={{
+                            backgroundColor: "#ffffff",
+                            border: "1px solid rgba(140, 128, 112, 0.25)",
+                            borderRadius: "8px",
+                            padding: "1.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.03)"
+                          }}
+                        >
+                          <div>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                              <h5 style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", color: "#2e2925", margin: 0 }}>
+                                {sub.title}
+                              </h5>
+                              <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--accent-dark)", backgroundColor: "#f8f3ea", padding: "0.2rem 0.6rem", borderRadius: "12px", whiteSpace: "nowrap" }}>
+                                {sub.duration}
+                              </span>
+                            </div>
 
+                            {sub.programInvestment && (
+                              <div style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", color: "var(--accent-dark)", marginBottom: "0.5rem" }}>
+                                PROGRAM INVESTMENT: {sub.programInvestment}
+                              </div>
+                            )}
+
+                            {sub.target && !sub.phases && (
+                              <p style={{ fontSize: "0.85rem", color: "#6e6358", fontStyle: "italic", marginBottom: "0.8rem", fontWeight: 500 }}>
+                                {sub.target}
+                              </p>
+                            )}
+
+                            {sub.phases && sub.phases.length > 0 && (
+                              <div style={{ backgroundColor: "#f9f6f0", padding: "0.8rem", borderRadius: "6px", marginBottom: "0.9rem" }}>
+                                <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", color: "var(--accent-dark)", display: "block", marginBottom: "0.35rem" }}>
+                                  Program Phases & Goals:
+                                </span>
+                                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                                  {sub.phases.map((ph, i) => (
+                                    <li key={i} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.83rem", color: "#2e2925" }}>
+                                      <Check size={14} style={{ color: "var(--accent-dark)", flexShrink: 0 }} />
+                                      <span>{ph}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {sub.includes && sub.includes.length > 0 && (
+                              <div style={{ backgroundColor: "#f9f6f0", padding: "0.8rem", borderRadius: "6px", marginBottom: "0.9rem" }}>
+                                <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", color: "var(--accent-dark)", display: "block", marginBottom: "0.35rem" }}>
+                                  Includes:
+                                </span>
+                                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                                  {sub.includes.map((inc, i) => (
+                                    <li key={i} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.83rem", color: "#2e2925" }}>
+                                      <Check size={14} style={{ color: "var(--accent-dark)", flexShrink: 0 }} />
+                                      <span>{inc}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {sub.paymentPolicy && (
+                              <div style={{ fontSize: "0.8rem", color: "#4a423a", backgroundColor: "#f5ead6", padding: "0.6rem 0.8rem", borderRadius: "4px", marginBottom: "1.1rem", lineHeight: "1.4" }}>
+                                <strong>Package & Payment Policy:</strong> {sub.paymentPolicy}
+                              </div>
+                            )}
+                          </div>
+
+                          <a
+                            href={sub.whatsappUrl || buildWhatsAppConsultationUrl(sub.title)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary"
+                            style={{ width: "100%", justifyContent: "center", fontSize: "0.86rem", padding: "0.75rem" }}
+                          >
+                            <ExternalLink size={14} />
+                            Book Consultation
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
                 <div
+                  key={item.id}
+                  className="spa-card"
                   style={{
-                    paddingTop: "1rem",
-                    borderTop: "1px solid var(--border-subtle)",
+                    padding: "1.6rem",
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between"
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    border: item.popular
+                      ? "2px solid var(--accent-dark)"
+                      : "1px solid var(--border-subtle)"
                   }}
                 >
                   <div>
-                    <span
-                      style={{
-                        fontSize: "0.78rem",
-                        color: "var(--text-light)",
-                        display: "block"
-                      }}
-                    >
-                      {item.duration}
-                    </span>
-                    <span
+                    {item.badge && (
+                      <span
+                        className="featured-badge"
+                        style={{ marginBottom: "0.6rem" }}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                    <h3
                       style={{
                         fontFamily: "var(--font-serif)",
                         fontSize: "1.35rem",
-                        fontWeight: 600
+                        marginBottom: "0.5rem"
                       }}
                     >
-                      {item.price}
-                    </span>
+                      {item.title}
+                    </h3>
+
+                    <p
+                      style={{
+                        fontSize: "0.88rem",
+                        color: "var(--text-muted)",
+                        marginBottom: "1rem"
+                      }}
+                    >
+                      {item.description}
+                    </p>
+
+                    {item.includes && (
+                      <div
+                        style={{
+                          backgroundColor: "rgba(255, 255, 255, 0.4)",
+                          padding: "0.85rem",
+                          borderRadius: "4px",
+                          marginBottom: "1rem"
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "0.72rem",
+                            fontWeight: 600,
+                            textTransform: "uppercase",
+                            color: "var(--accent-dark)",
+                            display: "block",
+                            marginBottom: "0.3rem"
+                          }}
+                        >
+                          Included:
+                        </span>
+                        <ul
+                          style={{
+                            listStyle: "none",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.3rem"
+                          }}
+                        >
+                          {item.includes.map((inc, i) => (
+                            <li
+                              key={i}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.4rem",
+                                fontSize: "0.82rem"
+                              }}
+                            >
+                              <Check
+                                size={13}
+                                style={{ color: "var(--accent-dark)" }}
+                              />{" "}
+                              {inc}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
 
-                  <a
-                    href={buildWhatsAppBookingUrl(item.title, item.price)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary"
-                    style={{ padding: "0.65rem 1.1rem", fontSize: "0.84rem" }}
+                  <div
+                    style={{
+                      paddingTop: "1rem",
+                      borderTop: "1px solid var(--border-subtle)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}
                   >
-                    <ExternalLink size={14} />
-                    Book
-                  </a>
+                    <div>
+                      <span
+                        style={{
+                          fontSize: "0.78rem",
+                          color: "var(--text-light)",
+                          display: "block"
+                        }}
+                      >
+                        {item.duration}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-serif)",
+                          fontSize: item.price.length > 15 ? "1.05rem" : "1.35rem",
+                          fontWeight: 600
+                        }}
+                      >
+                        {item.price}
+                      </span>
+                    </div>
+
+                    <a
+                      href={buildWhatsAppBookingUrl(item.title, item.price)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary"
+                      style={{ padding: "0.65rem 1.1rem", fontSize: "0.84rem" }}
+                    >
+                      <ExternalLink size={14} />
+                      {item.badge === "Consultation Required" || item.price?.toLowerCase().includes("expert recommendation")
+                        ? "Book Consultation"
+                        : "Book"}
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -40,10 +40,26 @@ export const BRAND = {
   ],
 };
 
+export const buildWhatsAppConsultationUrl = (
+  serviceName = "a SpaChance treatment",
+) => {
+  const message = `Hi SpaChance! I need a consultation for ${serviceName}. My preferred date is [insert date] and time is [insert time]. Please confirm availability.`;
+  return `${BRAND.whatsappUrl}?text=${encodeURIComponent(message)}`;
+};
+
 export const buildWhatsAppBookingUrl = (
   serviceName = "a SpaChance treatment",
   price = "",
+  isConsultation = false,
 ) => {
+  const needsConsultation =
+    isConsultation ||
+    (price && price.toLowerCase().includes("expert recommendation"));
+
+  if (needsConsultation) {
+    return buildWhatsAppConsultationUrl(serviceName);
+  }
+
   const priceText = price ? ` (${price})` : "";
   const message = `Hi SpaChance! I'd like to book ${serviceName}${priceText}. My preferred date is [insert date] and time is [insert time]. Please confirm availability.`;
   return `${BRAND.whatsappUrl}?text=${encodeURIComponent(message)}`;
@@ -206,17 +222,27 @@ export const SERVICES_CATALOG = [
     image: "/assets/facial.avif",
     items: [
       {
-        id: "facial-1",
-        title: "Acne treatment facial (2)",
-        duration: "4h",
-        price: "GHS 3,800.00",
+        id: "facial-6",
+        title: "Classic facial",
+        duration: "2h",
+        price: "GHS 500.00",
         description:
-          "Take control of your skin with our targeted acne treatment facial. Designed to combat breakouts, reduce redness, and prevent future blemishes.",
+          "A classic facial is a fundamental skincare treatment that focuses on cleansing, exfoliating, and hydrating the skin.",
+        whatsappUrl: buildWhatsAppBookingUrl("Classic facial", "GHS 500.00"),
+      },
+      {
+        id: "facial-7",
+        title: "Deep Cleanse Facial",
+        duration: "2h",
+        price: "GHS 600.00",
+        description:
+          "It is a specialized skincare treatment designed to target and alleviate acne-prone skin.",
         whatsappUrl: buildWhatsAppBookingUrl(
-          "Acne treatment facial (2)",
-          "GHS 3,800.00",
+          "Deep Cleanse Facial",
+          "GHS 600.00",
         ),
       },
+      
       {
         id: "facial-2",
         title: "Facials Returning Clients - LED Therapy",
@@ -254,97 +280,160 @@ export const SERVICES_CATALOG = [
         ),
       },
       {
+        id: "facial-1",
+        title: "Acne Treatment Facial (2 treatments & aftercare skincare products)",
+        popular: true,
+        badge: "Consultation Required",
+        duration: "4 hr total (2 sessions + aftercare kit)",
+        price: "Expert recommendation needed before booking",
+        description:
+          "Take control of your skin with our targeted acne treatment facial. Designed to combat breakouts, reduce redness, and prevent future blemishes. Includes 2 sessions of customized facial treatment and aftercare skincare products for personal use at home. Requires consultation and skin analysis before booking.",
+        includes: [
+          "2 Sessions of customized facial treatment",
+          "Full aftercare skincare products for home use",
+          "Deep cleansing to unclog pores",
+          "Soothing ingredients to reduce inflammation & redness",
+          "Tailored treatments to suit mild to severe acne",
+          "Boosts skin confidence with regular care",
+        ],
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Acne Treatment Facial (2 sessions + home products)",
+          "Expert recommendation needed before booking",
+        ),
+      },
+      {
         id: "facial-5",
         title:
           "Barrier Repair Facial (3 sessions with aftercare skincare products)",
-        duration: "6h 15m",
-        price: "GHS 3,800.00",
+        badge: "Consultation Required",
+        duration: "6h 15m (3 sessions)",
+        price: "Expert recommendation needed before booking",
         description:
-          "A barrier repair facial is a restorative treatment aimed at repairing and fortifying the skin's natural barrier, providing relief from dryness, sensitivity, and irritation.",
+          "A barrier repair facial is a restorative treatment aimed at repairing and fortifying the skin's natural barrier, providing relief from dryness, sensitivity, and irritation. Requires consultation and skin analysis before booking.",
         whatsappUrl: buildWhatsAppBookingUrl(
-          "Barrier Repair Facial (3 sessions)",
-          "GHS 3,800.00",
+          "Barrier Repair Facial (3 sessions + aftercare products)",
+          "Expert recommendation needed before booking",
+        ),
+      },
+      
+      {
+        id: "microneedling-menu",
+        title: "Microneedling Menu",
+        isUmbrella: true,
+        popular: true,
+        badge: "Consultation Required",
+        price: "Expert recommendation needed before booking",
+        duration: "1 hr per session",
+        notice: "‼️ These Treatments are only recommended after a Consultation and skin analysis.",
+        description:
+          "At SpaChance, microneedling is performed with precision and respect for the skin barrier. This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation — without aggressive trauma. Our approach is tailored for melanated skin, reducing the risk of post-inflammatory hyperpigmentation while delivering visible results.",
+        subServices: [
+          {
+            id: "mn-collagen-refresh",
+            title: "Collagen Refresh (0.5mm)",
+            duration: "1 hr",
+            target: "For glow, mild texture, pore refinement",
+            includes: ["Microneedling", "HA infusion", "LED"],
+            paymentPolicy: "3 sessions — 70% upfront payment before treatment, 30% balance on 3rd session",
+            whatsappUrl: buildWhatsAppBookingUrl(
+              "Microneedling: Collagen Refresh (0.5mm)",
+              "Expert recommendation needed before booking",
+            ),
+          },
+          {
+            id: "mn-scar-revision",
+            title: "Scar Revision Therapy",
+            duration: "1 hr",
+            target: "For acne scars & deep texture",
+            includes: [
+              "Targeted deeper needling",
+              "HA + Peptide infusion",
+              "LED Therapy",
+            ],
+            paymentPolicy: "Package of 4 sessions: 70% upfront payment before treatment and 30% balance on 3rd session",
+            whatsappUrl: buildWhatsAppBookingUrl(
+              "Microneedling: Scar Revision Therapy",
+              "Expert recommendation needed before booking",
+            ),
+          },
+          {
+            id: "mn-skin-remodeling",
+            title: "Skin Remodeling Protocol",
+            duration: "1 hr (14 weeks duration)",
+            target: "Best for acne scars + pigmentation combination clients",
+            includes: [
+              "1 Prep Peel session",
+              "3 Microneedling sessions",
+              "1 Post-needling peel session",
+            ],
+            paymentPolicy: "70-30 payment policy applies (70% upfront before treatment, 30% balance on 3rd session)",
+            whatsappUrl: buildWhatsAppBookingUrl(
+              "Microneedling: Skin Remodeling Protocol",
+              "Expert recommendation needed before booking",
+            ),
+          },
+        ],
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Microneedling Menu Consultation",
+          "Expert recommendation needed before booking",
         ),
       },
       {
-        id: "facial-6",
-        title: "Classic facial",
-        duration: "2h",
-        price: "GHS 500.00",
+        id: "skin-refinement-protocol",
+        title: "The Skin Refinement Protocol",
+        isUmbrella: true,
+        popular: true,
+        badge: "Consultation Required",
+        price: "Expert recommendation needed before booking",
+        duration: "45 min per session",
+        notice: "‼️ These Treatments are only recommended after a Consultation and skin analysis.",
         description:
-          "A classic facial is a fundamental skincare treatment that focuses on cleansing, exfoliating, and hydrating the skin.",
-        whatsappUrl: buildWhatsAppBookingUrl("Classic facial", "GHS 500.00"),
-      },
-      {
-        id: "facial-7",
-        title: "Deep Cleanse Facial",
-        duration: "2h",
-        price: "GHS 600.00",
-        description:
-          "It is a specialized skincare treatment designed to target and alleviate acne-prone skin.",
+          "A gentle, yet effective skin correction journey created specifically for skin of color — targeting mild acne, pigmentation, and texture while protecting the skin barrier.",
+        expectations: [
+          "Reduced acne flare-ups",
+          "Clearer pores & smoother texture",
+          "Healthier, more balanced skin",
+          "Pigmentation Correction",
+          "Long-term Radiance",
+        ],
+        subServices: [
+          {
+            id: "srp-resurfacing-peel",
+            title: "Resurfacing Peel",
+            duration: "45 min (8 weeks duration)",
+            programInvestment: "Includes 2 Phases with 3 peel sessions",
+            phases: [
+              "Phase 1: Skin Stabilization",
+              "Phase 2: Correction & Refinement",
+            ],
+            timeline: "Duration: 8 weeks",
+            paymentPolicy: "70-30 payment policy applies (70% upfront before treatment, 30% balance on 3rd session)",
+            whatsappUrl: buildWhatsAppBookingUrl(
+              "The Skin Refinement Protocol: Resurfacing Peel",
+              "Expert recommendation needed before booking",
+            ),
+          },
+          {
+            id: "srp-advance-refinement-peel",
+            title: "Advance Refinement Peel",
+            duration: "45 min (12 weeks duration)",
+            programInvestment: "Includes 3 Phases with 5 peel sessions",
+            phases: [
+              "Phase 1: Skin Stabilization",
+              "Phase 2: Correction & Refinement",
+              "Phase 3: Texture + Pigmentation Correction",
+            ],
+            timeline: "Duration: 12 weeks",
+            paymentPolicy: "70-30 payment policy applies (70% upfront before treatment, 30% balance on 3rd session)",
+            whatsappUrl: buildWhatsAppBookingUrl(
+              "The Skin Refinement Protocol: Advance Refinement Peel",
+              "Expert recommendation needed before booking",
+            ),
+          },
+        ],
         whatsappUrl: buildWhatsAppBookingUrl(
-          "Deep Cleanse Facial",
-          "GHS 600.00",
-        ),
-      },
-      {
-        id: "facial-8",
-        title: "Microneedling Menu - Collagen Refresh (0.5mm)",
-        duration: "1h",
-        price: "GHS 2,700.00",
-        description:
-          "This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation without aggressive trauma.",
-        whatsappUrl: buildWhatsAppBookingUrl(
-          "Microneedling - Collagen Refresh",
-          "GHS 2,700.00",
-        ),
-      },
-      {
-        id: "facial-9",
-        title: "Microneedling Menu - Scar Revision Therapy",
-        duration: "1h",
-        price: "GHS 4,400.00",
-        description:
-          "This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation without aggressive trauma.",
-        whatsappUrl: buildWhatsAppBookingUrl(
-          "Microneedling - Scar Revision Therapy",
-          "GHS 4,400.00",
-        ),
-      },
-      {
-        id: "facial-10",
-        title: "Microneedling Menu - Skin Remodeling Protocol",
-        duration: "1h",
-        price: "GHS 5,200.00",
-        description:
-          "This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation without aggressive trauma.",
-        whatsappUrl: buildWhatsAppBookingUrl(
-          "Microneedling - Skin Remodeling Protocol",
-          "GHS 5,200.00",
-        ),
-      },
-      {
-        id: "facial-11",
-        title: "The Skin Refinement Protocol Resurfacing Peel",
-        duration: "45m",
-        price: "GHS 2,500.00",
-        description:
-          "A gentle yet effective skin correction journey created specifically for skin of color, targeting mild acne, pigmentation, and texture.",
-        whatsappUrl: buildWhatsAppBookingUrl(
-          "Resurfacing Peel",
-          "GHS 2,500.00",
-        ),
-      },
-      {
-        id: "facial-12",
-        title: "The Skin Refinement Protocol Advance Refinement Peel",
-        duration: "45m",
-        price: "GHS 4,200.00",
-        description:
-          "A gentle yet effective skin correction journey created specifically for skin of color, targeting mild acne, pigmentation, and texture.",
-        whatsappUrl: buildWhatsAppBookingUrl(
-          "Advance Refinement Peel",
-          "GHS 4,200.00",
+          "The Skin Refinement Protocol Consultation",
+          "Expert recommendation needed before booking",
         ),
       },
     ],

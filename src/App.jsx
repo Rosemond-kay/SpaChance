@@ -15,54 +15,80 @@ import ContactPage from "./pages/ContactPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import { getPageStateFromLocation, buildRoute } from "./router";
+import { BLOG_POSTS } from "./data/spachanceData";
 
 const updateDocumentMeta = (page, category, blogSlug) => {
   const route = buildRoute(page, category, blogSlug);
   const canonical = `https://spachance.com${route}`;
-  const pageMeta = {
-    home: {
-      title: "SpaChance | Premium Skin & Wellness, Ogbojo-Madina",
-      description:
-        "Premium skin, wellness, and restorative massage in Ogbojo-Madina, Accra. Book tailored facials, barrier care, and spa rituals.",
-    },
-    about: {
-      title: "About SpaChance | Skin Specialist & Wellness Studio",
-      description:
-        "Learn about Anita Sekyere, SpaChance’s founder, and the studio’s barrier-care philosophy in Ogbojo-Madina, Accra.",
-    },
-    services: {
-      title: "Services & Packages | SpaChance",
-      description:
-        "Explore SpaChance facials, massage, pedicure, makeup, and brows & lash services in Ogbojo-Madina, Accra.",
-    },
-    blog: {
-      title: "Blog & Insights | SpaChance",
-      description:
-        "Read skincare and wellness insights from Anita Sekyere for healthy skin and deep relaxation in Accra.",
-    },
-    book: {
-      title: "Book & Hours | SpaChance",
-      description:
-        "Book your SpaChance treatment online or by WhatsApp and view studio hours in Ogbojo-Madina, Accra.",
-    },
-    contact: {
-      title: "Contact SpaChance",
-      description:
-        "Get in touch with SpaChance by phone, WhatsApp, or email for consultations and bookings in Ogbojo-Madina, Accra.",
-    },
-    privacy: {
-      title: "Privacy Policy | SpaChance",
-      description:
-        "Read SpaChance’s privacy policy covering booking data, analytics, and cookie use on the site.",
-    },
-    terms: {
-      title: "Terms of Service | SpaChance",
-      description:
-        "Review SpaChance’s booking, cancellation, and service terms for appointments and gift cards.",
-    },
+
+  let meta = {
+    title: "SpaChance | Premium Skin & Wellness, Ogbojo-Madina",
+    description:
+      "Premium skin, wellness, and restorative massage in Ogbojo-Madina, Accra. Book tailored facials, barrier care, and spa rituals.",
+    ogImage: "/assets/spachance_logo.png",
   };
 
-  const meta = pageMeta[page] || pageMeta.home;
+  if (page === "blog" && blogSlug) {
+    const post = BLOG_POSTS.find((p) => p.slug === blogSlug);
+    if (post) {
+      meta = {
+        title: `${post.title} | SpaChance Journal`,
+        description: post.tldr || post.title,
+        ogImage: post.image || "/assets/spachance_logo.png",
+      };
+    } else {
+      meta = {
+        title: "Blog & Insights | SpaChance",
+        description:
+          "Read skincare and wellness insights from Anita Sekyere for healthy skin and deep relaxation in Accra.",
+        ogImage: "/assets/spachance_logo.png",
+      };
+    }
+  } else if (page === "services") {
+    const categoryTitle =
+      category && category !== "packages"
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)} Services`
+        : "Services & Packages";
+    meta = {
+      title: `${categoryTitle} | SpaChance Ogbojo-Madina`,
+      description: `Explore SpaChance ${category || "spa"} services, skin barrier care, facials, therapeutic massage, pedicure, manicure, and beauty treatments in Accra.`,
+      ogImage: "/assets/spachance_logo.png",
+    };
+  } else {
+    const pageMeta = {
+      home: {
+        title: "SpaChance | Premium Skin & Wellness, Ogbojo-Madina",
+        description:
+          "Premium skin, wellness, and restorative massage in Ogbojo-Madina, Accra. Book tailored facials, barrier care, and spa rituals.",
+      },
+      about: {
+        title: "About SpaChance | Skin Specialist & Wellness Studio",
+        description:
+          "Learn about Anita Sekyere, SpaChance’s founder, and the studio’s barrier-care philosophy in Ogbojo-Madina, Accra.",
+      },
+      book: {
+        title: "Book & Hours | SpaChance",
+        description:
+          "Book your SpaChance treatment online or by WhatsApp and view studio hours in Ogbojo-Madina, Accra.",
+      },
+      contact: {
+        title: "Contact SpaChance",
+        description:
+          "Get in touch with SpaChance by phone, WhatsApp, or email for consultations and bookings in Ogbojo-Madina, Accra.",
+      },
+      privacy: {
+        title: "Privacy Policy | SpaChance",
+        description:
+          "Read SpaChance’s privacy policy covering booking data, analytics, and cookie use on the site.",
+      },
+      terms: {
+        title: "Terms of Service | SpaChance",
+        description:
+          "Review SpaChance’s booking, cancellation, and service terms for appointments and gift cards.",
+      },
+    };
+    meta = pageMeta[page] || pageMeta.home;
+  }
 
   document.title = meta.title;
   const titleTag = document.querySelector('meta[name="title"]');
@@ -81,6 +107,11 @@ const updateDocumentMeta = (page, category, blogSlug) => {
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) ogUrl.setAttribute("content", canonical);
+
+  if (meta.ogImage) {
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) ogImage.setAttribute("content", meta.ogImage);
+  }
 
   const twitterCard = document.querySelector('meta[name="twitter:card"]');
   if (twitterCard) twitterCard.setAttribute("content", "summary_large_image");
@@ -184,10 +215,10 @@ export default function App() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  // Scroll to top on page change
+  // Scroll to top on page or blog slug change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [activePage]);
+  }, [activePage, activeBlogSlug]);
 
   const handleBookService = (service) => {
     setSelectedService(service);
@@ -239,7 +270,9 @@ export default function App() {
         {activePage === "services" && (
           <ServicesPage
             activeCategory={serviceCategory}
-            onCategoryChange={setServiceCategory}
+            onCategoryChange={(cat) =>
+              handleSetActivePage("services", { category: cat })
+            }
             onBookService={handleBookService}
             onOpenGiftModal={() => setIsGiftModalOpen(true)}
           />
@@ -258,7 +291,9 @@ export default function App() {
         )}
 
         {activePage === "contact" && <ContactPage />}
+
         {activePage === "privacy" && <PrivacyPage />}
+
         {activePage === "terms" && <TermsPage />}
       </main>
 
@@ -268,20 +303,19 @@ export default function App() {
         onOpenGiftModal={() => setIsGiftModalOpen(true)}
       />
 
-      {/* Interactive WhatsApp Assistant Widget */}
+      {/* Floating Action Elements */}
       <WhatsAppWidget />
 
-      {/* Interactive Gift Card Modal */}
+      {/* Modals */}
       <GiftCardModal
         isOpen={isGiftModalOpen}
         onClose={() => setIsGiftModalOpen(false)}
       />
 
-      {/* Interactive Fresha Booking Modal */}
       <FreshaModal
         isOpen={isFreshaModalOpen}
         onClose={() => setIsFreshaModalOpen(false)}
-        selectedService={selectedService}
+        service={selectedService}
       />
     </div>
   );

@@ -26,13 +26,28 @@ const staticRoutes = [
   { url: "/terms", priority: "0.3", changefreq: "yearly" },
 ];
 
+const categoryRoutes = [
+  "/services/packages",
+  "/services/skin-consultation",
+  "/services/facials",
+  "/services/massage",
+  "/services/pedicure-and-manicure",
+  "/services/makeup",
+  "/services/brows-and-lash",
+  "/services/waxing",
+].map((url) => ({
+  url,
+  priority: "0.85",
+  changefreq: "weekly",
+}));
+
 const blogRoutes = blogSlugs.map((slug) => ({
   url: `/blog/${slug}`,
   priority: "0.7",
   changefreq: "monthly",
 }));
 
-const allRoutes = [...staticRoutes, ...blogRoutes];
+const allRoutes = [...staticRoutes, ...categoryRoutes, ...blogRoutes];
 const today = new Date().toISOString().split("T")[0];
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>

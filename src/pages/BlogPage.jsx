@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Clock, X, Share2, ArrowRight, Calendar, Search } from "lucide-react";
+import { Clock, Share2, ArrowRight, Calendar, Search, ArrowLeft, CheckCircle2, User, Sparkles } from "lucide-react";
 import {
   BRAND,
   BLOG_POSTS,
   buildWhatsAppBookingUrl,
+  buildWhatsAppConsultationUrl,
 } from "../data/spachanceData";
 
 export default function BlogPage({
@@ -11,15 +12,16 @@ export default function BlogPage({
   setActivePage,
   onOpenBookModal,
 }) {
-  const [selectedPost, setSelectedPost] = useState(
-    activeBlogSlug
-      ? BLOG_POSTS.find((p) => p.slug === activeBlogSlug) || null
-      : null,
-  );
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const categories = ["All", "Skincare", "Massage & Wellness"];
+
+  // Find article if slug is active in URL
+  const activePost = activeBlogSlug
+    ? BLOG_POSTS.find((p) => p.slug === activeBlogSlug) || null
+    : null;
 
   const filteredPosts = BLOG_POSTS.filter((post) => {
     const matchesCategory =
@@ -30,6 +32,233 @@ export default function BlogPage({
     return matchesCategory && matchesSearch;
   });
 
+  const handleShareClick = () => {
+    navigator.clipboard?.writeText(window.location.href);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 3000);
+  };
+
+  // If a blog slug is present in the URL, render the Standalone Blog Article Page
+  if (activePost) {
+    const nextPosts = BLOG_POSTS.filter((p) => p.id !== activePost.id).slice(0, 2);
+
+    return (
+      <div className="blog-article-page" style={{ paddingTop: "110px", minHeight: "100vh", backgroundColor: "var(--bg-primary)" }}>
+        {/* Top Sticky Breadcrumb Bar */}
+        <div
+          style={{
+            backgroundColor: "#ede0c8",
+            borderBottom: "1px solid var(--border-subtle)",
+            padding: "0.85rem 0",
+            position: "sticky",
+            top: "100px",
+            zIndex: 90
+          }}
+        >
+          <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <button
+              onClick={() => setActivePage("blog")}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                color: "var(--text-primary)"
+              }}
+            >
+              <ArrowLeft size={18} />
+              <span>Back to All Articles</span>
+            </button>
+
+            <button
+              onClick={handleShareClick}
+              className="btn-secondary"
+              style={{ padding: "0.4rem 0.9rem", fontSize: "0.82rem" }}
+            >
+              <Share2 size={14} />
+              <span>{copiedLink ? "Link Copied!" : "Share Article"}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Article Main Content Container */}
+        <article className="section-padding" style={{ paddingBottom: "3rem" }}>
+          <div className="container" style={{ maxWidth: "840px" }}>
+            {/* Article Meta Header */}
+            <div style={{ marginBottom: "1.8rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", fontSize: "0.82rem", color: "var(--accent-dark)", marginBottom: "0.8rem" }}>
+                <span className="featured-badge" style={{ textTransform: "uppercase" }}>
+                  {activePost.category}
+                </span>
+                <span>•</span>
+                <span style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                  <Clock size={13} /> {activePost.readTime}
+                </span>
+                <span>•</span>
+                <span>{activePost.date}</span>
+              </div>
+
+              <h1
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "clamp(2rem, 4.2vw, 3.2rem)",
+                  color: "var(--text-primary)",
+                  lineHeight: "1.2",
+                  marginBottom: "1rem"
+                }}
+              >
+                {activePost.title}
+              </h1>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", color: "var(--text-muted)", fontSize: "0.9rem" }}>
+                <div style={{ width: "36px", height: "36px", borderRadius: "50%", backgroundColor: "var(--accent-dark)", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <User size={18} />
+                </div>
+                <div>
+                  <strong style={{ color: "var(--text-primary)", display: "block" }}>{activePost.author}</strong>
+                  <span style={{ fontSize: "0.78rem" }}>Certified Skin Specialist & Beauty Consultant</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Image */}
+            <div
+              className="spa-card"
+              style={{
+                borderRadius: "12px",
+                overflow: "hidden",
+                height: "clamp(260px, 45vw, 420px)",
+                marginBottom: "2rem"
+              }}
+            >
+              <img
+                src={activePost.image}
+                alt={activePost.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+            </div>
+
+            {/* TL;DR Summary Box */}
+            <div
+              style={{
+                backgroundColor: "#f5ead6",
+                borderLeft: "5px solid var(--accent-dark)",
+                padding: "1.2rem 1.5rem",
+                borderRadius: "6px",
+                marginBottom: "2.5rem",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.03)"
+              }}
+            >
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, textTransform: "uppercase", color: "var(--accent-dark)", display: "block", marginBottom: "0.4rem", letterSpacing: "0.06em" }}>
+                Key Takeaway (TL;DR):
+              </span>
+              <p style={{ fontSize: "1.02rem", color: "#2e2925", lineHeight: "1.6", margin: 0, fontWeight: 500 }}>
+                {activePost.tldr}
+              </p>
+            </div>
+
+            {/* Article Content Blocks */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "2rem", marginBottom: "3rem" }}>
+              {activePost.contentBlocks.map((block, idx) => (
+                <section key={idx} className="article-block">
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "1.7rem",
+                      color: "var(--text-primary)",
+                      marginBottom: "0.75rem",
+                      lineHeight: "1.3"
+                    }}
+                  >
+                    {block.heading}
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: "1.05rem",
+                      color: "#4a423a",
+                      lineHeight: "1.75",
+                      margin: 0
+                    }}
+                  >
+                    {block.text}
+                  </p>
+                </section>
+              ))}
+            </div>
+
+            {/* Recommended Consultation CTA Banner */}
+            <div
+              className="spa-card"
+              style={{
+                backgroundColor: "#ffffff",
+                border: "2px solid var(--accent-dark)",
+                borderRadius: "12px",
+                padding: "2rem",
+                textAlign: "center",
+                marginBottom: "3.5rem"
+              }}
+            >
+              <Sparkles size={26} style={{ color: "var(--accent-dark)", marginBottom: "0.6rem" }} />
+              <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.6rem", marginBottom: "0.6rem" }}>
+                Ready to Experience Barrier-First Skincare in Accra?
+              </h3>
+              <p style={{ fontSize: "0.95rem", color: "var(--text-muted)", marginBottom: "1.4rem", maxWidth: "600px", margin: "0 auto 1.4rem auto" }}>
+                Schedule a skin consultation with the expert SpaChance team in Ogbojo-Madina to analyze your skin barrier and receive a personalized treatment plan.
+              </p>
+              <a
+                href={buildWhatsAppConsultationUrl(activePost.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+                style={{ display: "inline-flex", padding: "0.85rem 1.6rem" }}
+              >
+                <Calendar size={16} /> Book Consultation
+              </a>
+            </div>
+
+            {/* Read Next Section */}
+            {nextPosts.length > 0 && (
+              <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "2.5rem" }}>
+                <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.5rem", marginBottom: "1.5rem" }}>
+                  More Articles from SpaChance
+                </h3>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+                  {nextPosts.map((p) => (
+                    <div key={p.id} className="spa-card" style={{ padding: "1.2rem", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                      <div>
+                        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent-dark)", textTransform: "uppercase", display: "block", marginBottom: "0.4rem" }}>
+                          {p.category}
+                        </span>
+                        <h4 style={{ fontFamily: "var(--font-serif)", fontSize: "1.2rem", marginBottom: "0.5rem", lineHeight: "1.3" }}>
+                          {p.title}
+                        </h4>
+                        <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: "1rem" }}>
+                          {p.tldr.slice(0, 100)}...
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setActivePage("blog", { slug: p.slug })}
+                        className="btn-secondary"
+                        style={{ padding: "0.45rem 0.85rem", fontSize: "0.8rem", width: "100%", justifyContent: "center" }}
+                      >
+                        Read Article <ArrowRight size={13} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </article>
+      </div>
+    );
+  }
+
+  // Otherwise render the Blog Listing Page
   return (
     <div className="blog-page">
       {/* 1. Full Viewport Authentic Studio Hero */}
@@ -97,7 +326,7 @@ export default function BlogPage({
                 textShadow: "0 2px 10px rgba(0,0,0,0.6)",
               }}
             >
-              Expert guidance by Anita Sekyere on skin barrier care,
+              Expert guidance on skin barrier care,
               hyperpigmentation, and body massage in Accra.
             </p>
 
@@ -290,9 +519,8 @@ export default function BlogPage({
                     </span>
                     <button
                       onClick={() => {
-                        setSelectedPost(post);
                         if (setActivePage) {
-                          setActivePage("blog", { blogSlug: post.slug });
+                          setActivePage("blog", { slug: post.slug });
                         }
                       }}
                       className="btn-secondary"
@@ -307,157 +535,6 @@ export default function BlogPage({
           </div>
         </div>
       </section>
-
-      {/* Reader Modal */}
-      {selectedPost && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 1200,
-            backgroundColor: "rgba(35, 31, 28, 0.75)",
-            backdropFilter: "blur(10px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "1.5rem",
-          }}
-        >
-          <div
-            className="spa-card"
-            style={{
-              width: "100%",
-              maxWidth: "700px",
-              maxHeight: "88vh",
-              backgroundColor: "#f5eae0",
-              padding: "2rem",
-              position: "relative",
-              borderRadius: "8px",
-              overflowY: "auto",
-            }}
-          >
-            <button
-              onClick={() => {
-                setSelectedPost(null);
-                if (setActivePage) {
-                  setActivePage("blog");
-                }
-              }}
-              style={{
-                position: "absolute",
-                top: "1.2rem",
-                right: "1.2rem",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                color: "var(--text-primary)",
-              }}
-            >
-              <X size={24} />
-            </button>
-
-            <span
-              style={{
-                fontSize: "0.78rem",
-                fontWeight: 600,
-                textTransform: "uppercase",
-                color: "var(--accent-dark)",
-              }}
-            >
-              {selectedPost.category} • {selectedPost.readTime}
-            </span>
-
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "2rem",
-                marginTop: "0.3rem",
-                marginBottom: "0.8rem",
-                lineHeight: "1.2",
-              }}
-            >
-              {selectedPost.title}
-            </h1>
-
-            <div
-              style={{
-                backgroundColor: "var(--bg-card)",
-                padding: "1rem",
-                borderRadius: "4px",
-                borderLeft: "4px solid var(--accent-dark)",
-                marginBottom: "1.5rem",
-                fontSize: "0.88rem",
-              }}
-            >
-              <strong>Summary (TL;DR):</strong> {selectedPost.tldr}
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1.4rem",
-                marginBottom: "2rem",
-              }}
-            >
-              {selectedPost.contentBlocks.map((block, i) => (
-                <div key={i}>
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-serif)",
-                      fontSize: "1.35rem",
-                      marginBottom: "0.4rem",
-                      color: "var(--text-primary)",
-                    }}
-                  >
-                    {block.heading}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: "0.95rem",
-                      color: "var(--text-muted)",
-                      lineHeight: "1.65",
-                    }}
-                  >
-                    {block.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div
-              style={{
-                borderTop: "1px solid var(--border-subtle)",
-                paddingTop: "1.2rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <a
-                href={buildWhatsAppBookingUrl("a SpaChance facial treatment")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-                style={{ fontSize: "0.88rem" }}
-              >
-                <Calendar size={15} /> Book Facial via WhatsApp
-              </a>
-
-              <button
-                onClick={() => {
-                  navigator.clipboard?.writeText(window.location.href);
-                  alert("Link copied to clipboard!");
-                }}
-                className="btn-secondary"
-                style={{ padding: "0.45rem 0.9rem", fontSize: "0.82rem" }}
-              >
-                <Share2 size={14} /> Share
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
