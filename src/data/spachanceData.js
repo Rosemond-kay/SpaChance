@@ -386,7 +386,7 @@ export const SERVICES_CATALOG = [
         badge: "Consultation Required",
         price: "Expert recommendation needed before booking",
         duration: "45 min per session",
-        notice: "‼️ These Treatments are only recommended after a Consultation and skin analysis.",
+        notice: "These Treatments are only recommended after a Consultation and skin analysis.",
         description:
           "A gentle, yet effective skin correction journey created specifically for skin of color — targeting mild acne, pigmentation, and texture while protecting the skin barrier.",
         expectations: [
