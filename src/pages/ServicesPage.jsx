@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import { Calendar, Check, Sparkles, Gift, ExternalLink } from "lucide-react";
-import {
-  BRAND,
-  SERVICES_CATALOG,
-  buildWhatsAppBookingUrl,
-} from "../data/spachanceData";
+import { BRAND, SERVICES_CATALOG, buildWhatsAppBookingUrl } from "../data/spachanceData";
 
-export default function ServicesPage({
-  activeCategory: initialCategory,
-  onBookService,
-  onOpenGiftModal,
-}) {
+export default function ServicesPage({ activeCategory: initialCategory, onBookService, onOpenGiftModal }) {
   const categories = SERVICES_CATALOG.map((c) => c.category);
-  const [activeCategory, setActiveCategory] = useState(
-    initialCategory || categories[0] || "packages",
-  );
+  const [activeCategory, setActiveCategory] = useState(initialCategory || categories[0] || "packages");
 
   const currentCatalog =
-    SERVICES_CATALOG.find((c) => c.category === activeCategory) ||
-    SERVICES_CATALOG[0];
+    SERVICES_CATALOG.find((c) => c.category === activeCategory) || SERVICES_CATALOG[0];
 
   return (
     <div className="services-page">
@@ -33,12 +22,10 @@ export default function ServicesPage({
           color: "var(--text-dark-bg)",
           textAlign: "center",
           overflow: "hidden",
-          paddingTop: "80px",
+          paddingTop: "80px"
         }}
       >
-        <div
-          style={{ position: "absolute", inset: 0, opacity: 0.88, zIndex: 1 }}
-        >
+        <div style={{ position: "absolute", inset: 0, opacity: 0.88, zIndex: 1 }}>
           <img
             src="/assets/hero_services_real.jpg"
             alt="SpaChance Treatment Room Sanctuary"
@@ -50,7 +37,7 @@ export default function ServicesPage({
               position: "absolute",
               inset: 0,
               background:
-                "linear-gradient(to bottom, rgba(25, 22, 19, 0.55) 0%, rgba(25, 22, 19, 0.3) 60%, rgba(237, 224, 200, 0.85) 100%)",
+                "linear-gradient(to bottom, rgba(25, 22, 19, 0.55) 0%, rgba(25, 22, 19, 0.3) 60%, rgba(237, 224, 200, 0.85) 100%)"
             }}
           />
         </div>
@@ -62,7 +49,7 @@ export default function ServicesPage({
               style={{
                 color: "#ede0c8",
                 letterSpacing: "0.18em",
-                textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+                textShadow: "0 2px 8px rgba(0,0,0,0.5)"
               }}
             >
               Treatment Catalogue
@@ -72,7 +59,7 @@ export default function ServicesPage({
                 color: "#ffffff",
                 marginBottom: "1rem",
                 fontSize: "clamp(2.5rem, 5.2vw, 4.4rem)",
-                textShadow: "0 2px 14px rgba(0,0,0,0.6)",
+                textShadow: "0 2px 14px rgba(0,0,0,0.6)"
               }}
             >
               Personalized Skin & Wellness Menu
@@ -84,12 +71,10 @@ export default function ServicesPage({
                 color: "#f5eae0",
                 fontSize: "1.12rem",
                 lineHeight: "1.65",
-                textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+                textShadow: "0 2px 10px rgba(0,0,0,0.6)"
               }}
             >
-              Explore our curated spa packages, skin barrier facials,
-              therapeutic deep tissue massage, pedicure & manicure, and beauty
-              treatments in Ogbojo-Madina, Accra.
+              Explore our curated spa packages, skin barrier facials, therapeutic deep tissue massage, pedicure & manicure, and beauty treatments in Ogbojo-Madina, Accra.
             </p>
 
             <a
@@ -101,7 +86,7 @@ export default function ServicesPage({
                 backgroundColor: "#ede0c8",
                 color: "#2e2925",
                 borderColor: "#ede0c8",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.3)"
               }}
             >
               <Calendar size={17} />
@@ -111,55 +96,14 @@ export default function ServicesPage({
         </div>
       </section>
 
-      {/* 2. Category Filter Tabs */}
-      <section
-        style={{
-          backgroundColor: "#e5d7be",
-          borderBottom: "1px solid var(--border-subtle)",
-          position: "sticky",
-          top: "100px",
-          zIndex: 90,
-        }}
-      >
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "0.6rem",
-            padding: "0.85rem",
-            overflowX: "auto",
-          }}
-        >
+      {/* 2. Category Filter Tabs - Mobile Responsive Bar */}
+      <section className="category-pills-bar">
+        <div className="container category-pills-container">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              style={{
-                padding: "0.55rem 1.2rem",
-                borderRadius: "25px",
-                border:
-                  activeCategory === cat
-                    ? "2px solid var(--text-primary)"
-                    : "1px solid var(--border-subtle)",
-                backgroundColor:
-                  activeCategory === cat
-                    ? "var(--text-primary)"
-                    : "rgba(255, 255, 255, 0.5)",
-                color:
-                  activeCategory === cat
-                    ? "var(--bg-primary)"
-                    : "var(--text-primary)",
-                fontWeight: activeCategory === cat ? 600 : 500,
-                fontSize: "0.88rem",
-                cursor: "pointer",
-                transition: "all 300ms ease",
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                textTransform: "capitalize",
-              }}
+              className={`category-pill-btn ${activeCategory === cat ? "active" : ""}`}
             >
               {cat === "packages" && (
                 <Sparkles
@@ -169,10 +113,11 @@ export default function ServicesPage({
                       activeCategory === "packages"
                         ? "#ede0c8"
                         : "var(--accent-dark)",
+                    flexShrink: 0
                   }}
                 />
               )}
-              {cat}
+              <span>{cat}</span>
             </button>
           ))}
         </div>
@@ -202,7 +147,7 @@ export default function ServicesPage({
                 activeCategory === "packages"
                   ? "repeat(auto-fit, minmax(310px, 1fr))"
                   : "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "1.8rem",
+              gap: "1.8rem"
             }}
           >
             {currentCatalog.items.map((item) => (
@@ -216,7 +161,7 @@ export default function ServicesPage({
                   justifyContent: "space-between",
                   border: item.popular
                     ? "2px solid var(--accent-dark)"
-                    : "1px solid var(--border-subtle)",
+                    : "1px solid var(--border-subtle)"
                 }}
               >
                 <div>
@@ -232,7 +177,7 @@ export default function ServicesPage({
                     style={{
                       fontFamily: "var(--font-serif)",
                       fontSize: "1.35rem",
-                      marginBottom: "0.5rem",
+                      marginBottom: "0.5rem"
                     }}
                   >
                     {item.title}
@@ -242,7 +187,7 @@ export default function ServicesPage({
                     style={{
                       fontSize: "0.88rem",
                       color: "var(--text-muted)",
-                      marginBottom: "1rem",
+                      marginBottom: "1rem"
                     }}
                   >
                     {item.description}
@@ -254,7 +199,7 @@ export default function ServicesPage({
                         backgroundColor: "rgba(255, 255, 255, 0.4)",
                         padding: "0.85rem",
                         borderRadius: "4px",
-                        marginBottom: "1rem",
+                        marginBottom: "1rem"
                       }}
                     >
                       <span
@@ -264,7 +209,7 @@ export default function ServicesPage({
                           textTransform: "uppercase",
                           color: "var(--accent-dark)",
                           display: "block",
-                          marginBottom: "0.3rem",
+                          marginBottom: "0.3rem"
                         }}
                       >
                         Included:
@@ -274,7 +219,7 @@ export default function ServicesPage({
                           listStyle: "none",
                           display: "flex",
                           flexDirection: "column",
-                          gap: "0.3rem",
+                          gap: "0.3rem"
                         }}
                       >
                         {item.includes.map((inc, i) => (
@@ -284,7 +229,7 @@ export default function ServicesPage({
                               display: "flex",
                               alignItems: "center",
                               gap: "0.4rem",
-                              fontSize: "0.82rem",
+                              fontSize: "0.82rem"
                             }}
                           >
                             <Check
@@ -305,7 +250,7 @@ export default function ServicesPage({
                     borderTop: "1px solid var(--border-subtle)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    justifyContent: "space-between"
                   }}
                 >
                   <div>
@@ -313,7 +258,7 @@ export default function ServicesPage({
                       style={{
                         fontSize: "0.78rem",
                         color: "var(--text-light)",
-                        display: "block",
+                        display: "block"
                       }}
                     >
                       {item.duration}
@@ -322,7 +267,7 @@ export default function ServicesPage({
                       style={{
                         fontFamily: "var(--font-serif)",
                         fontSize: "1.35rem",
-                        fontWeight: 600,
+                        fontWeight: 600
                       }}
                     >
                       {item.price}
@@ -337,7 +282,7 @@ export default function ServicesPage({
                     style={{ padding: "0.65rem 1.1rem", fontSize: "0.84rem" }}
                   >
                     <ExternalLink size={14} />
-                    Book via WhatsApp
+                    Book
                   </a>
                 </div>
               </div>
@@ -359,18 +304,100 @@ export default function ServicesPage({
             size={28}
             style={{ color: "var(--accent-dark)", marginBottom: "0.6rem" }}
           />
-          <h2 style={{ marginBottom: "0.6rem" }}>
-            Gift a SpaChance Experience
-          </h2>
+          <h2 style={{ marginBottom: "0.6rem" }}>Gift a SpaChance Experience</h2>
           <p style={{ marginBottom: "1.5rem", fontSize: "0.92rem" }}>
-            SpaChance Gift Cards allow recipients to choose their preferred
-            skincare treatment or massage therapy at their convenience.
+            SpaChance Gift Cards allow recipients to choose their preferred skincare treatment or massage therapy at their convenience.
           </p>
           <button onClick={onOpenGiftModal} className="btn-primary">
             <Sparkles size={15} /> Purchase Gift Voucher
           </button>
         </div>
       </section>
+
+      <style>{`
+        .category-pills-bar {
+          background-color: #e5d7be;
+          border-bottom: 1px solid var(--border-subtle);
+          position: sticky;
+          top: 100px;
+          z-index: 90;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          transition: top 300ms ease;
+        }
+        .category-pills-container {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          padding: 0.85rem 1rem;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .category-pills-container::-webkit-scrollbar {
+          display: none;
+        }
+
+        .category-pill-btn {
+          padding: 0.55rem 1.2rem;
+          border-radius: 25px;
+          border: 1px solid var(--border-subtle);
+          background-color: rgba(255, 255, 255, 0.55);
+          color: var(--text-primary);
+          font-weight: 500;
+          font-size: 0.88rem;
+          cursor: pointer;
+          transition: all 300ms ease;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          text-transform: capitalize;
+          flex-shrink: 0;
+        }
+
+        .category-pill-btn:hover {
+          background-color: rgba(255, 255, 255, 0.85);
+        }
+
+        .category-pill-btn.active {
+          border: 2px solid var(--text-primary);
+          background-color: var(--text-primary);
+          color: var(--bg-primary);
+          font-weight: 600;
+          box-shadow: 0 4px 12px rgba(46, 41, 37, 0.15);
+        }
+
+        @media (min-width: 901px) {
+          .category-pills-container {
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 1024px) {
+          .category-pills-bar {
+            top: 75px !important;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .category-pills-container {
+            justify-content: flex-start !important;
+            padding: 0.75rem 0.8rem !important;
+            gap: 0.45rem !important;
+          }
+          .category-pill-btn {
+            padding: 0.45rem 0.85rem !important;
+            font-size: 0.82rem !important;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .category-pills-bar {
+            top: 65px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
