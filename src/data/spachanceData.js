@@ -324,7 +324,7 @@ export const SERVICES_CATALOG = [
         badge: "Consultation Required",
         price: "Expert recommendation needed before booking",
         duration: "1 hr per session",
-        notice: "‼️ These Treatments are only recommended after a Consultation and skin analysis.",
+        notice: "These Treatments are only recommended after a Consultation and skin analysis.",
         description:
           "At SpaChance, microneedling is performed with precision and respect for the skin barrier. This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation — without aggressive trauma. Our approach is tailored for melanated skin, reducing the risk of post-inflammatory hyperpigmentation while delivering visible results.",
         subServices: [
