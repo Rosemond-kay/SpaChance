@@ -4,29 +4,27 @@ export const BRAND = {
   name: "SpaChance",
   tagline: "Healthy Skin. Deep Relaxation. Lasting Confidence.",
   alternateTaglines: [
-    "Expert skincare, therapeutic massage, and beauty treatments in East Legon, Accra.",
+    "Expert skincare, therapeutic massage, and beauty treatments in Ogbojo/Madina, Accra.",
     "Personalized skin and body wellness for deep relaxation and visible radiance.",
   ],
   founder: {
     name: "Anita Sekyere",
     title: "Certified Skin Specialist & Beauty Consultant",
-    bio: "Founded by certified skin specialist Anita Sekyere, SpaChance provides personalized skin barrier repair, targeted hyperpigmentation treatment, and therapeutic massage in a peaceful East Legon sanctuary.",
+    bio: "Founded by certified skin specialist Anita Sekyere, SpaChance provides personalized skin barrier repair, targeted hyperpigmentation treatment, and therapeutic massage in a peaceful Ogbojo-Madina sanctuary.",
     image: "/assets/Anita-Sekyere-SpaChance-Founder.jpeg",
     fallbackImage: "/assets/founder.jpg",
   },
   positioning:
-    "SpaChance is a premium skin and wellness studio in East Legon, Accra, Ghana, specializing in personalized facials, therapeutic massage, skincare, and beauty treatments. Founded by Anita Sekyere, a certified skin specialist and beauty consultant.",
-  location: "East Legon / North Legon Area, Accra, Ghana",
+    "SpaChance is a premium skin and wellness studio in Ogbojo/Madina, Accra, Ghana, specializing in personalized facials, therapeutic massage, skincare, and beauty treatments. Founded by Anita Sekyere, a certified skin specialist and beauty consultant.",
+  location: "Ogbojo/Madina Area, Accra, Ghana",
   address: {
-    streetAddress: "East Legon / North Legon Area",
+    streetAddress: "Ogbojo / Madina Area",
     addressLocality: "Accra",
     addressRegion: "Greater Accra",
     addressCountry: "GH",
   },
   contactEmail: "hello@spachance.com",
   googleMapsUrl: "https://share.google/CIUT5xThq2CxXTpTh",
-  freshaBookingUrl:
-    "https://www.fresha.com/book-now/spachance-jcxwxeuj/services?lid=1255191&share=true&pId=1191372",
   whatsappUrl: "https://wa.me/233545196008",
   whatsappPhone: "+233 54 519 6008",
   socials: {
@@ -42,36 +40,45 @@ export const BRAND = {
   ],
 };
 
+export const buildWhatsAppBookingUrl = (
+  serviceName = "a SpaChance treatment",
+  price = "",
+) => {
+  const priceText = price ? ` (${price})` : "";
+  const message = `Hi SpaChance! I'd like to book ${serviceName}${priceText}. My preferred date is [insert date] and time is [insert time]. Please confirm availability.`;
+  return `${BRAND.whatsappUrl}?text=${encodeURIComponent(message)}`;
+};
+
 export const HERO_SLIDES = [
   {
-    image: "/assets/hero_home_real.jpg",
-    subheading: "East Legon • Accra",
+    image: "/assets/facial.avif",
+    subheading: "Ogbojo-Madina • Accra",
     headline: "Healthy Skin. Deep Relaxation. Lasting Confidence.",
-    ctaText: "Book Appointment",
+    ctaText: "Book",
   },
   {
-    image: "/assets/hero_services_real.jpg",
+    image: "/assets/Skincare.avif",
     subheading: "Therapeutic Sanctuary",
     headline: "Unhurried Facial & Bodywork Experiences",
     ctaText: "Explore Services",
   },
   {
-    image: "/assets/hero_about_real.jpg",
+    image: "/assets/Spa day.avif",
     subheading: "Skin Barrier Care",
     headline: "Expert Skincare Tailored to Your Unique Needs",
     ctaText: "View Facials",
   },
   {
-    image: "/assets/hero_blog_real.jpg",
+    image: "/assets/lash.avif",
     subheading: "Personalized Wellness",
     headline: "Restorative Massage Therapy for Body Reset",
     ctaText: "View Massages",
   },
   {
-    image: "/assets/hero_book_real.jpg",
+    image: "/assets/PEDI.avif",
     subheading: "Sanctuary Atmosphere",
-    headline: "Your SpaChance Awaits in East Legon",
-    ctaText: "Reserve Now",
+    headline: "Your SpaChance Awaits in Ogbojo-Madina",
+    ctaText: "Book via WhatsApp",
   },
 ];
 
@@ -87,12 +94,12 @@ export const SPA_PACKAGES = [
     description:
       "Our signature sanctuary experience combining deep barrier skincare with a 90-minute full body massage.",
     includes: [
-      "Barrier Repair Facial with Custom Serums",
-      "90-Min Deep Tissue or Hot Stone Massage",
-      "Hydrating Herbal Foot Soak & Pedicure",
+      "Custom Classic Facial",
+      "60-Min Hot Stone Massage",
+      "Hydrating Jelly Foot Soak & Pedicure",
       "Complimentary Botanical Refreshments",
     ],
-    image: "/assets/hero_services_real.jpg",
+    image: "/assets/Welcoming Space.avif",
   },
   {
     id: "pkg-2",
@@ -105,12 +112,11 @@ export const SPA_PACKAGES = [
     description:
       "Formulated by our expert founder to repair compromised skin barriers, clear acne congestion, and restore glow.",
     includes: [
-      "Digital Skin Consultation & Diagnostics",
+      "Skin Consultation & Diagnostics",
       "Deep Cleanse & Gentle Exfoliation",
-      "Cold-Pressed Lipid Barrier Seal",
-      "Scalp & Neck Pressure-Point Relief",
+      "Lipid Barrier Seal",
     ],
-    image: "/assets/hero_about_real.jpg",
+    image: "/assets/facial.avif",
   },
   {
     id: "pkg-3",
@@ -124,11 +130,10 @@ export const SPA_PACKAGES = [
       "Designed for busy professionals seeking immediate release from lower back tightness and shoulder knots.",
     includes: [
       "60-Min Swedish or Deep Tissue Massage",
-      "Hot Basalt Stone Spinal Accent",
-      "Nourishing Hand & Foot Hydration",
-      "Aromatherapy Breathing Sequence",
+      "Aromatherapy",
+      "Nourishing Pedi & Mani Hydration",
     ],
-    image: "/assets/hero_blog_real.jpg",
+    image: "/assets/Spa day.avif",
   },
 ];
 
@@ -137,35 +142,41 @@ export const SERVICES_CATALOG = [
     category: "packages",
     title: "Curated Spa Packages",
     description:
-      "Signature wellness rituals combining skincare, massage, and pampering in a calm East Legon setting.",
-    image: "/assets/hero_services_real.jpg",
+      "Signature wellness rituals combining skincare, massage, and pampering in a calm Ogbojo-Madina setting.",
+    image: "/assets/Spa package.jpg",
     items: [
       {
         id: "pkg-1",
         title: "Indulgent Self-Care",
         duration: "3h",
-        price: "¢600.00",
+        price: "GHS 600.00",
         description:
           "This package includes a refreshing welcome drink, classic pedicure, and classic manicure with polish.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Indulgent Self-Care Package",
+          "GHS 600.00",
+        ),
       },
       {
         id: "pkg-2",
         title: "MELT AWAY TENSION",
         duration: "2h 30m",
-        price: "¢800.00",
+        price: "GHS 800.00",
         description:
           "This package includes a refreshing welcome drink, classic pedicure, and a full body massage.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Melt Away Tension Package",
+          "GHS 800.00",
+        ),
       },
       {
         id: "pkg-3",
         title: "SPA DAY",
         duration: "3h 30m",
-        price: "¢1,500.00",
+        price: "GHS 1,500.00",
         description:
-          "This package includes a refreshing welcome drink, a customized facial treatment, and a full body massage.",
-        freshaUrl: BRAND.freshaBookingUrl,
+          "This package includes a refreshing welcome drink, a customized facial treatment, a full body massage, and a pedi-mani combo.",
+        whatsappUrl: buildWhatsAppBookingUrl("Spa Day Package", "GHS 1,500.00"),
       },
     ],
   },
@@ -173,17 +184,17 @@ export const SERVICES_CATALOG = [
     category: "skin consultation",
     title: "Skin Consultation",
     description:
-      "Professional assessments to evaluate your skin type, concerns, and recommended treatments.",
+      "Professional assessments to evaluate your skin type, concerns, and recommended treatments and products.",
     image: "/assets/hero_about_real.jpg",
     items: [
       {
         id: "skin-consultation",
         title: "Skin Consultation",
         duration: "45m",
-        price: "¢300.00",
+        price: "GHS 300.00",
         description:
           "A skin consultation is a professional assessment that evaluates your skin type, condition, and concerns to recommend appropriate treatments and products.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Skin Consultation", "GHS 300.00"),
       },
     ],
   },
@@ -192,116 +203,149 @@ export const SERVICES_CATALOG = [
     title: "Facials & Advanced Skin Treatments",
     description:
       "Targeted facials for acne, barrier repair, and visible glow from first treatment to long-term care.",
-    image: "/assets/hero_about_real.jpg",
+    image: "/assets/facial.avif",
     items: [
       {
         id: "facial-1",
         title: "Acne treatment facial (2)",
         duration: "4h",
-        price: "¢3,800.00",
+        price: "GHS 3,800.00",
         description:
           "Take control of your skin with our targeted acne treatment facial. Designed to combat breakouts, reduce redness, and prevent future blemishes.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Acne treatment facial (2)",
+          "GHS 3,800.00",
+        ),
       },
       {
         id: "facial-2",
         title: "Facials Returning Clients - LED Therapy",
         duration: "2h",
-        price: "¢400.00",
+        price: "GHS 400.00",
         description:
           "Monthly facial treatment only. This service rate is applied to clients who are on a consistent facial treatment for specific skin conditions.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Facials Returning Clients - LED Therapy",
+          "GHS 400.00",
+        ),
       },
       {
         id: "facial-3",
         title: "Facials Returning Clients - Classic Facial",
         duration: "2h",
-        price: "¢450.00",
+        price: "GHS 450.00",
         description:
           "Monthly facial treatment only. This service rate is applied to clients who are on a consistent facial treatment for specific skin conditions.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Facials Returning Clients - Classic Facial",
+          "GHS 450.00",
+        ),
       },
       {
         id: "facial-4",
         title: "Facials Returning Clients - Barrier Repair Facial",
         duration: "2h",
-        price: "¢550.00",
+        price: "GHS 550.00",
         description:
           "Monthly facial treatment only. This service rate is applied to clients who are on a consistent facial treatment for specific skin conditions.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Facials Returning Clients - Barrier Repair Facial",
+          "GHS 550.00",
+        ),
       },
       {
         id: "facial-5",
         title:
           "Barrier Repair Facial (3 sessions with aftercare skincare products)",
         duration: "6h 15m",
-        price: "¢3,800.00",
+        price: "GHS 3,800.00",
         description:
-          "A barrier repair facial is a restorative treatment aimed at repairing and fortifying the skin's natural barrier, providing relief from dryness, sensitivity, and irritation while promoting a healthier, more resilient complexion.",
-        freshaUrl: BRAND.freshaBookingUrl,
+          "A barrier repair facial is a restorative treatment aimed at repairing and fortifying the skin's natural barrier, providing relief from dryness, sensitivity, and irritation.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Barrier Repair Facial (3 sessions)",
+          "GHS 3,800.00",
+        ),
       },
       {
         id: "facial-6",
         title: "Classic facial",
         duration: "2h",
-        price: "¢500.00",
+        price: "GHS 500.00",
         description:
           "A classic facial is a fundamental skincare treatment that focuses on cleansing, exfoliating, and hydrating the skin.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Classic facial", "GHS 500.00"),
       },
       {
         id: "facial-7",
         title: "Deep Cleanse Facial",
         duration: "2h",
-        price: "¢600.00",
+        price: "GHS 600.00",
         description:
           "It is a specialized skincare treatment designed to target and alleviate acne-prone skin.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Deep Cleanse Facial",
+          "GHS 600.00",
+        ),
       },
       {
         id: "facial-8",
         title: "Microneedling Menu - Collagen Refresh (0.5mm)",
         duration: "1h",
-        price: "¢2,700.00",
+        price: "GHS 2,700.00",
         description:
           "This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation without aggressive trauma.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Microneedling - Collagen Refresh",
+          "GHS 2,700.00",
+        ),
       },
       {
         id: "facial-9",
         title: "Microneedling Menu - Scar Revision Therapy",
         duration: "1h",
-        price: "¢4,400.00",
+        price: "GHS 4,400.00",
         description:
           "This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation without aggressive trauma.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Microneedling - Scar Revision Therapy",
+          "GHS 4,400.00",
+        ),
       },
       {
         id: "facial-10",
         title: "Microneedling Menu - Skin Remodeling Protocol",
         duration: "1h",
-        price: "¢5,200.00",
+        price: "GHS 5,200.00",
         description:
           "This treatment stimulates natural collagen production to improve acne scars, refine texture, and correct uneven pigmentation without aggressive trauma.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Microneedling - Skin Remodeling Protocol",
+          "GHS 5,200.00",
+        ),
       },
       {
         id: "facial-11",
         title: "The Skin Refinement Protocol Resurfacing Peel",
         duration: "45m",
-        price: "¢2,500.00",
+        price: "GHS 2,500.00",
         description:
-          "A gentle yet effective skin correction journey created specifically for skin of color, targeting mild acne, pigmentation, and texture while protecting the skin barrier.",
-        freshaUrl: BRAND.freshaBookingUrl,
+          "A gentle yet effective skin correction journey created specifically for skin of color, targeting mild acne, pigmentation, and texture.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Resurfacing Peel",
+          "GHS 2,500.00",
+        ),
       },
       {
         id: "facial-12",
         title: "The Skin Refinement Protocol Advance Refinement Peel",
         duration: "45m",
-        price: "¢4,200.00",
+        price: "GHS 4,200.00",
         description:
-          "A gentle yet effective skin correction journey created specifically for skin of color, targeting mild acne, pigmentation, and texture while protecting the skin barrier.",
-        freshaUrl: BRAND.freshaBookingUrl,
+          "A gentle yet effective skin correction journey created specifically for skin of color, targeting mild acne, pigmentation, and texture.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Advance Refinement Peel",
+          "GHS 4,200.00",
+        ),
       },
     ],
   },
@@ -310,51 +354,114 @@ export const SERVICES_CATALOG = [
     title: "Massage Therapy",
     description:
       "Restorative massage experiences for tension release, deep muscle recovery, and full-body calm.",
-    image: "/assets/hero_blog_real.jpg",
+    image: "/assets/hotstone-massage.jpeg",
     items: [
       {
         id: "msg-1",
         title: "Full body Swedish Massage",
         duration: "1h",
-        price: "¢450.00",
+        price: "GHS 450.00",
         description:
           "A gentle form of massage that uses long strokes, kneading, and circular movements to relax and energize the body.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Full body Swedish Massage",
+          "GHS 450.00",
+        ),
       },
       {
         id: "msg-2",
         title: "Deep Tissue Massage",
         duration: "1h",
-        price: "¢500.00",
+        price: "GHS 500.00",
         description:
           "Focuses on deeper layers of muscles and is used for chronic muscle tension, knots, or injuries.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Deep Tissue Massage",
+          "GHS 500.00",
+        ),
       },
     ],
   },
   {
-    category: "pedicure",
-    title: "Pedicure Services",
+    category: "pedicure & manicure",
+    title: "Pedicure & Manicure Services",
     description:
-      "Hydrating foot soaks, polish, and finishing touches that leave your feet soft and refreshed.",
-    image: "/assets/hero_book_real.jpg",
+      "Hydrating foot soaks, gel polish, manicures, and finishing touches for beautifully soft, refreshed hands and feet.",
+    image: "/assets/Pedi feet.avif",
     items: [
       {
         id: "pedicure-1",
-        title: "Jelly Pedi",
-        duration: "1h",
-        price: "¢300.00",
-        description: "Luxurious foot spa treatment.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        title: "French Gel Pedi",
+        duration: "1 hr, 45 min",
+        price: "GHS 350",
+        description:
+          "Elegant French gel pedicure with a hydrating soak and precise polish finish.",
+        whatsappUrl: buildWhatsAppBookingUrl("French Gel Pedi", "GHS 350"),
       },
       {
         id: "pedicure-2",
+        title: "Spa Pedi with Gel polish",
+        duration: "1 hr, 45 min",
+        price: "GHS 300",
+        description:
+          "Relaxing spa pedicure enhanced with long-lasting gel polish.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Spa Pedi with Gel polish",
+          "GHS 300",
+        ),
+      },
+      {
+        id: "pedicure-3",
+        title: "Men Spa Pedi",
+        duration: "2 hr",
+        price: "GHS 300",
+        description:
+          "A masculine foot treatment with comfort-focused care and soothing hydration.",
+        whatsappUrl: buildWhatsAppBookingUrl("Men Spa Pedi", "GHS 300"),
+      },
+      {
+        id: "pedicure-4",
+        title: "Jelly Pedi",
+        duration: "1 hr",
+        price: "GHS 300",
+        description: "Luxurious foot spa treatment with jelly soak and polish.",
+        whatsappUrl: buildWhatsAppBookingUrl("Jelly Pedi", "GHS 300"),
+      },
+      {
+        id: "pedicure-5",
         title: "Spa Pedicure",
-        duration: "1h 45m",
-        price: "¢200.00",
+        duration: "1 hr, 45 min",
+        price: "GHS 200",
         description:
           "Indulge your feet in a pampering experience that rejuvenates and refreshes.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Spa Pedicure", "GHS 200"),
+      },
+      {
+        id: "pedicure-6",
+        title: "Tidying & Gel polish",
+        duration: "1 hr",
+        price: "GHS 100",
+        description:
+          "Quick grooming treatment with clean edges and gel color finish.",
+        whatsappUrl: buildWhatsAppBookingUrl("Tidying & Gel polish", "GHS 100"),
+      },
+      {
+        id: "pedicure-7",
+        title: "Mani & Gel Polish",
+        duration: "1 hr",
+        price: "GHS 200",
+        description:
+          "Hand and nail treatment with gel polish for a beautifully polished finish.",
+        whatsappUrl: buildWhatsAppBookingUrl("Mani & Gel Polish", "GHS 200"),
+      },
+      {
+        id: "pedicure-8",
+        title: "Men Mani",
+        duration: "1 hr",
+        price: "GHS 150",
+        description:
+          "A tailored manicure for men with nail care and hand hydration.",
+        whatsappUrl: buildWhatsAppBookingUrl("Men Mani", "GHS 150"),
       },
     ],
   },
@@ -369,10 +476,10 @@ export const SERVICES_CATALOG = [
         id: "makeup-1",
         title: "Day Makeup",
         duration: "1h 45m",
-        price: "¢500.00",
+        price: "GHS 500.00",
         description:
           "Consultation, skincare prep, makeup application, and strip lash extension application.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Day Makeup", "GHS 500.00"),
       },
     ],
   },
@@ -381,25 +488,51 @@ export const SERVICES_CATALOG = [
     title: "Brows & Lash Treatments",
     description:
       "Precision brow shaping, tinting, and microblading services for polished definition.",
-    image: "/assets/hero_home_real.jpg",
+    image: "/assets/lash.avif",
     items: [
+      {
+        id: "brow-1",
+        title: "Brow waxing and Tint",
+        duration: "45m",
+        price: "GHS 180.00",
+        description:
+          "Brow waxing shapes and defines the eyebrows by removing unwanted hair. Brow tinting applies a semi-permanent dye.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Brow waxing and Tint",
+          "GHS 180.00",
+        ),
+      },
+      {
+        id: "brow-2",
+        title: "Brow Wax",
+        duration: "30m",
+        price: "GHS 80.00",
+        description: "Brow grooming only.",
+        whatsappUrl: buildWhatsAppBookingUrl("Brow Wax", "GHS 80.00"),
+      },
       {
         id: "brow-3",
         title: "Microblading - Touch up",
         duration: "1h",
-        price: "¢500.00",
+        price: "GHS 500.00",
         description:
           "Semi-permanent cosmetic tattooing technique used to enhance the appearance of the eyebrows.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Microblading - Touch up",
+          "GHS 500.00",
+        ),
       },
       {
         id: "brow-4",
         title: "Microblading - New Brows",
         duration: "2h",
-        price: "¢800.00",
+        price: "GHS 800.00",
         description:
           "Semi-permanent cosmetic tattooing technique used to enhance the appearance of the eyebrows.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Microblading - New Brows",
+          "GHS 800.00",
+        ),
       },
     ],
   },
@@ -408,82 +541,74 @@ export const SERVICES_CATALOG = [
     title: "Waxing Services",
     description:
       "Precise waxing for brows, body, and intimate areas with comfort-focused care.",
-    image: "/assets/hero_home_real.jpg",
+    image: "/assets/swedish massage.avif",
     items: [
-      {
-        id: "brow-1",
-        title: "Brow waxing and Tint",
-        duration: "45m",
-        price: "¢180.00",
-        description:
-          "Brow waxing shapes and defines the eyebrows by removing unwanted hair. Brow tinting involves applying a semi-permanent dye.",
-        freshaUrl: BRAND.freshaBookingUrl,
-      },
-      {
-        id: "brow-2",
-        title: "Brow Wax",
-        duration: "30m",
-        price: "¢80.00",
-        description: "Brow grooming only.",
-        freshaUrl: BRAND.freshaBookingUrl,
-      },
       {
         id: "brow-5",
         title: "The Intimate combo",
         duration: "1h 15m",
-        price: "¢450.00",
+        price: "GHS 450.00",
         description:
           "This package includes underarm waxing and Hollywood waxing or bikini waxing services.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "The Intimate combo",
+          "GHS 450.00",
+        ),
       },
       {
         id: "brow-6",
         title: "Female Full body wax",
         duration: "1h 35m",
-        price: "¢4,650.00",
+        price: "GHS 650.00",
         description: "This package includes leg waxing and arm waxing.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Female Full body wax",
+          "GHS 650.00",
+        ),
       },
       {
         id: "brow-7",
         title: "Hollywood wax",
         duration: "45m",
-        price: "¢350.00",
+        price: "GHS 350.00",
         description:
-          "Removes all the hair from the pubic area, including the front, back, and everything in between.",
-        freshaUrl: BRAND.freshaBookingUrl,
+          "Removes all hair from the pubic area, including front, back, and everything in between.",
+        whatsappUrl: buildWhatsAppBookingUrl("Hollywood wax", "GHS 350.00"),
       },
       {
         id: "brow-8",
         title: "Arm waxing - Female",
         duration: "45m",
-        price: "¢300.00",
+        price: "GHS 300.00",
         description: "Arm waxing service.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Arm waxing - Female",
+          "GHS 300.00",
+        ),
       },
       {
         id: "brow-9",
         title: "Leg waxing Female",
         duration: "50m",
-        price: "¢350.00",
+        price: "GHS 350.00",
         description: "Leg waxing service.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Leg waxing Female", "GHS 350.00"),
       },
       {
         id: "brow-10",
         title: "Chin & Neck",
         duration: "45m",
-        price: "¢150.00",
+        price: "GHS 150.00",
         description: "Chin and neck waxing service.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Chin & Neck wax", "GHS 150.00"),
       },
       {
         id: "brow-11",
         title: "Underarm wax",
         duration: "30m",
-        price: "¢100.00",
+        price: "GHS 100.00",
         description: "Underarm waxing service.",
-        freshaUrl: BRAND.freshaBookingUrl,
+        whatsappUrl: buildWhatsAppBookingUrl("Underarm wax", "GHS 100.00"),
       },
     ],
   },
@@ -493,7 +618,7 @@ export const BLOG_POSTS = [
   {
     id: "post-1",
     slug: "skin-barrier-repair-accra",
-    title: "Skin Barrier Repair in West Africa: Essential Reset Guide",
+    title: "Skin Barrier Repair in Melanin Skin: Essential Reset Guide",
     category: "Skincare",
     date: "August 2026",
     readTime: "3 min read",
@@ -506,14 +631,14 @@ export const BLOG_POSTS = [
       },
       {
         heading: "How to tell if your skin barrier is damaged",
-        text: "Signs include a stinging feel when applying basic moisturizer, excessive oiliness with dry patches, and persistent acne. At SpaChance, Anita Sekyere evaluates barrier health before recommending active treatments.",
+        text: "Signs include a stinging feel when applying basic moisturizer, excessive oiliness with dry patches, and persistent acne. At SpaChance, our team evaluates barrier health before recommending active treatments.",
       },
       {
         heading: "3 Steps to restore barrier health",
-        text: "Pause harsh physical scrubs, use lipid-replenishing ceramides, and schedule a specialized Skin Barrier Maintenance session at SpaChance East Legon.",
+        text: "Pause harsh physical scrubs, use lipid-replenishing ceramides, and schedule a specialized Skin Barrier Maintenance session at SpaChance Ogbojo/Madina.",
       },
     ],
-    image: "/assets/hero_about_real.jpg",
+    image: "/assets/facial.avif",
   },
   {
     id: "post-2",
@@ -531,11 +656,11 @@ export const BLOG_POSTS = [
         text: "Swedish massage uses smooth strokes to lower stress and ease general tension. Deep Tissue applies firm pressure to release deep muscular knots and posture tightness built up from desk work or exercise.",
       },
       {
-        heading: "How much does a massage cost in East Legon, Accra?",
-        text: "Therapeutic massages in Accra range from GH₵ 350 to GH₵ 550. At SpaChance, all sessions take place in quiet luxury rooms with organic oils and hot stone accents.",
+        heading: "How much does a massage cost in Ogbojo-Madina, Accra?",
+        text: "Therapeutic massages in Accra range from GH₵ 450 to GH₵ 900. At SpaChance, all sessions take place in quiet luxury rooms with organic oils and hot stone accents.",
       },
     ],
-    image: "/assets/hero_blog_real.jpg",
+    image: "/assets/swedish massage.avif",
   },
   {
     id: "post-3",
@@ -556,14 +681,14 @@ export const BLOG_POSTS = [
         text: "We pair gentle tyrosinase inhibitors with anti-inflammatory niacinamide and enzyme exfoliation to safely fade dark spots while protecting your skin barrier.",
       },
     ],
-    image: "/assets/hero_home_real.jpg",
+    image: "/assets/Skincare.avif",
   },
 ];
 
 export const FAQS = [
   {
     q: "Where is SpaChance located and what areas do you serve?",
-    a: "SpaChance is located Ogbojo-Madina in Accra, Ghana. We serve clients across East Legon, North Legon, Airport Residential Area, Cantonments, Madina, and Dzorwulu.",
+    a: "SpaChance is located Ogbojo-Madina in Accra, Ghana. We serve clients across Ogbojo-Madina, North Legon, Airport Residential Area, Cantonments, Madina, and Dzorwulu.",
   },
   {
     q: "What spa treatments does SpaChance offer?",
@@ -571,11 +696,11 @@ export const FAQS = [
   },
   {
     q: "How much does a facial or massage cost at SpaChance?",
-    a: "Facials start at GH₵ 600, and body massages start at GH₵ 450. Special discounted packages are available for returning clients.",
+    a: "Facials start at GH₵ 400, and body massages start at GH₵ 450. Special discounted packages are available for returning clients.",
   },
   {
     q: "How do I book an appointment?",
-    a: "Book online via our official Fresha Booking link or message our team directly on WhatsApp at +233 54 519 6008.",
+    a: "Bookings are handled directly on WhatsApp at +233 54 519 6008. Click any booking button to open WhatsApp with your chosen service pre-filled, where you can share your preferred date and time.",
   },
   {
     q: "What are your operating hours?",
@@ -583,7 +708,7 @@ export const FAQS = [
   },
   {
     q: "Can I buy a SpaChance Gift Card?",
-    a: "Yes! We offer digital and physical SpaChance Gift Cards (GH₵ 300 to GH₵ 1,250) for any treatment or package.",
+    a: "Yes! We offer digital and physical SpaChance Gift Cards (GH₵ 500 to GH₵ 1,500) for any treatment or package.",
   },
   {
     q: "Which facial is best for acne and hyperpigmentation?",
@@ -606,20 +731,79 @@ export const FAQS = [
 export const TESTIMONIALS = [
   {
     quote:
-      "Anita's expertise in skin barrier repair saved my skin. The quiet luxury space in East Legon is peaceful and truly therapeutic.",
+      "Walking into this spa felt like stepping into a sanctuary. The atmosphere was calm, welcoming, and instantly soothing. My wife had her massage first, and when she came out, her smile said it all — she looked lighter, happier, and completely at peace. When it was my turn, I experienced the same magic. The therapist’s technique was both gentle and deeply effective, easing away tension while creating a sense of emotional release. It wasn’t just a massage; it was an experience that touched both body and soul.\n\nSharing this moment together made it even more special. We left feeling renewed, connected, and grateful for the care we received. This place doesn’t just offer massages — it offers healing, intimacy, and joy.\n\nIf you’re looking for somewhere to truly unwind and reconnect, I can’t recommend this spa enough. It’s the kind of place you’ll want to return to again and again.",
+    author: "Sylvester Sarfo Dikoh",
+    role: "Google Business Review",
+    stars: 5,
+    date: "2 months ago",
+  },
+  {
+    quote:
+      "I have had massage and pedicure from other places, and I must say my experience at SpaChance tops them all!\n\nThe massage was incredibly relaxing, every bit of tension melted away.\n\nThe pedicure was equally amazing. My feet felt so soft, clean and pampered.\n\nWhat topped it for me is the attention to details in all services rendered and the welcoming and peaceful atmosphere.\n\nA great time was had and I’m already looking forward to my next visit!\nHighly recommend !!",
+    author: "Elvera Apeamenyo",
+    role: "Google Business Review",
+    stars: 5,
+    date: "2 months ago",
+  },
+  {
+    quote:
+      "The massage was so relaxing and really enjoyed it.\nDefinitely gained me as a client.",
+    author: "Fordjour Lois",
+    role: "Google Business Review",
+    stars: 5,
+    date: "8 months ago",
+  },
+  {
+    quote: "A very beautiful and intimate space.\nExcellent service too!",
+    author: "Ivy Hammond",
+    role: "Google Business Review",
+    stars: 5,
+    date: "a year ago",
+  },
+  {
+    quote:
+      "Loved everything about my experience there. The privacy, ambience and service delivery. I highly recommend.",
+    author: "Dinah Hammond",
+    role: "Google Business Review",
+    stars: 5,
+    date: "a year ago",
+  },
+  {
+    quote: "Cozy and relaxing… Best spa experience!",
+    author: "Wendy Sekyere",
+    role: "Google Business Review",
+    stars: 5,
+    date: "a year ago",
+  },
+  {
+    quote: "First class treatment and excellent customer service.",
+    author: "fatau umar",
+    role: "Google Business Review",
+    stars: 5,
+    date: "3 weeks ago",
+  },
+  {
+    quote:
+      "Anita's expertise in skin barrier repair saved my skin. The quiet luxury space in Ogbojo-Madina is peaceful and truly therapeutic.",
     author: "Kofi A.",
-    role: "East Legon Resident",
+    role: "Ogbojo-Madina Resident",
+    stars: 5,
+    date: "Verified Client",
   },
   {
     quote:
       "The SpaChance Ultimate Escape is the best self-care investment. The deep tissue massage and custom facial left me glowing.",
     author: "Efua M.",
     role: "Accra Professional",
+    stars: 5,
+    date: "Verified Client",
   },
   {
     quote:
       "Finally a studio that understands melanin skin! My hyperpigmentation faded significantly without any irritation.",
     author: "Ama D.",
     role: "Airport Residential Resident",
+    stars: 5,
+    date: "Verified Client",
   },
 ];

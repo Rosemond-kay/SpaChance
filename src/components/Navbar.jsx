@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Sparkles, Calendar, Menu, X, Phone } from "lucide-react";
-import { BRAND } from "../data/spachanceData";
+import { BRAND, buildWhatsAppBookingUrl } from "../data/spachanceData";
 
 export default function Navbar({
   activePage,
@@ -27,6 +27,7 @@ export default function Navbar({
   return (
     <>
       <header
+        className="navbar-header"
         style={{
           position: "fixed",
           top: 0,
@@ -39,6 +40,7 @@ export default function Navbar({
           boxShadow: "0 4px 20px rgba(46, 41, 37, 0.08)",
           display: "flex",
           alignItems: "center",
+          transition: "height 300ms ease"
         }}
       >
         <div
@@ -50,7 +52,7 @@ export default function Navbar({
             height: "100%",
           }}
         >
-          {/* Logo taking up 100% full height of the Navbar */}
+          {/* Logo taking up full height of Navbar on Desktop, smaller on Tablets & iPads */}
           <button
             onClick={() => handleNavClick("home")}
             style={{
@@ -67,12 +69,14 @@ export default function Navbar({
             <img
               src="/assets/spachance_logo.png"
               alt="SpaChance Skin & Beauty"
+              className="navbar-brand-logo"
               style={{
                 height: "100%",
                 maxHeight: "100px",
                 width: "auto",
                 objectFit: "contain",
                 display: "block",
+                transition: "max-height 300ms ease"
               }}
             />
           </button>
@@ -115,7 +119,7 @@ export default function Navbar({
             </button>
 
             <a
-              href={BRAND.freshaBookingUrl}
+              href={buildWhatsAppBookingUrl("a SpaChance appointment")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -166,7 +170,7 @@ export default function Navbar({
             src="/assets/spachance_logo.png"
             alt="SpaChance"
             style={{
-              height: "110px",
+              height: "90px",
               width: "auto",
               marginBottom: "1rem",
               objectFit: "contain",
@@ -205,11 +209,15 @@ export default function Navbar({
             }}
           >
             <a
-              href={BRAND.freshaBookingUrl}
+              href={buildWhatsAppBookingUrl("a SpaChance appointment")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
-              style={{ width: "100%", textAlign: "center" }}
+              style={{
+                width: "100%",
+                textAlign: "center",
+                justifyContent: "center",
+              }}
             >
               <Calendar size={16} />
               Book
@@ -246,12 +254,31 @@ export default function Navbar({
       )}
 
       <style>{`
+        @media (min-width: 601px) and (max-width: 1024px) {
+          header.navbar-header {
+            height: 75px !important;
+          }
+          .navbar-brand-logo {
+            max-height: 70px !important;
+          }
+          .desktop-nav {
+            gap: 1.2rem !important;
+          }
+        }
         @media (max-width: 900px) {
           .desktop-nav {
             display: none !important;
           }
           .mobile-toggle {
             display: block !important;
+          }
+        }
+        @media (max-width: 600px) {
+          header.navbar-header {
+            height: 65px !important;
+          }
+          .navbar-brand-logo {
+            max-height: 58px !important;
           }
         }
       `}</style>

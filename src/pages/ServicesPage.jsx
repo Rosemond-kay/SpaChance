@@ -1,34 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Calendar, Check, Sparkles, Gift, ExternalLink } from "lucide-react";
-import { BRAND, SERVICES_CATALOG } from "../data/spachanceData";
+import {
+  BRAND,
+  SERVICES_CATALOG,
+  buildWhatsAppBookingUrl,
+} from "../data/spachanceData";
 
 export default function ServicesPage({
+  activeCategory: initialCategory,
   onBookService,
   onOpenGiftModal,
-  activeCategory,
-  onCategoryChange,
 }) {
-  const [selectedCategory, setSelectedCategory] = useState(
-    activeCategory || "packages",
+  const categories = SERVICES_CATALOG.map((c) => c.category);
+  const [activeCategory, setActiveCategory] = useState(
+    initialCategory || categories[0] || "packages",
   );
 
-  useEffect(() => {
-    if (activeCategory) {
-      setSelectedCategory(activeCategory);
-    }
-  }, [activeCategory]);
-
-  const categories = SERVICES_CATALOG.map((c) => c.category);
   const currentCatalog =
-    SERVICES_CATALOG.find((c) => c.category === selectedCategory) ||
+    SERVICES_CATALOG.find((c) => c.category === activeCategory) ||
     SERVICES_CATALOG[0];
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    if (onCategoryChange) {
-      onCategoryChange(category);
-    }
-  };
 
   return (
     <div className="services-page">
@@ -98,12 +88,12 @@ export default function ServicesPage({
               }}
             >
               Explore our curated spa packages, skin barrier facials,
-              therapeutic deep tissue massage, and beauty treatments in
-              Ogbojo-Madina, Accra.
+              therapeutic deep tissue massage, pedicure & manicure, and beauty
+              treatments in Ogbojo-Madina, Accra.
             </p>
 
             <a
-              href={BRAND.freshaBookingUrl}
+              href={buildWhatsAppBookingUrl("a SpaChance treatment")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -115,7 +105,7 @@ export default function ServicesPage({
               }}
             >
               <Calendar size={17} />
-              Book Treatment
+              Book
             </a>
           </div>
         </div>
@@ -126,6 +116,9 @@ export default function ServicesPage({
         style={{
           backgroundColor: "#e5d7be",
           borderBottom: "1px solid var(--border-subtle)",
+          position: "sticky",
+          top: "100px",
+          zIndex: 90,
         }}
       >
         <div
@@ -141,7 +134,7 @@ export default function ServicesPage({
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => handleCategoryChange(cat)}
+              onClick={() => setActiveCategory(cat)}
               style={{
                 padding: "0.55rem 1.2rem",
                 borderRadius: "25px",
@@ -150,14 +143,14 @@ export default function ServicesPage({
                     ? "2px solid var(--text-primary)"
                     : "1px solid var(--border-subtle)",
                 backgroundColor:
-                  selectedCategory === cat
+                  activeCategory === cat
                     ? "var(--text-primary)"
                     : "rgba(255, 255, 255, 0.5)",
                 color:
-                  selectedCategory === cat
+                  activeCategory === cat
                     ? "var(--bg-primary)"
                     : "var(--text-primary)",
-                fontWeight: selectedCategory === cat ? 600 : 500,
+                fontWeight: activeCategory === cat ? 600 : 500,
                 fontSize: "0.88rem",
                 cursor: "pointer",
                 transition: "all 300ms ease",
@@ -165,6 +158,7 @@ export default function ServicesPage({
                 display: "flex",
                 alignItems: "center",
                 gap: "0.4rem",
+                textTransform: "capitalize",
               }}
             >
               {cat === "packages" && (
@@ -172,7 +166,7 @@ export default function ServicesPage({
                   size={13}
                   style={{
                     color:
-                      selectedCategory === "packages"
+                      activeCategory === "packages"
                         ? "#ede0c8"
                         : "var(--accent-dark)",
                   }}
@@ -191,7 +185,12 @@ export default function ServicesPage({
       >
         <div className="container">
           <div className="section-header" style={{ marginBottom: "2rem" }}>
-            <span className="tag-subtitle">{currentCatalog.category} Menu</span>
+            <span
+              className="tag-subtitle"
+              style={{ textTransform: "capitalize" }}
+            >
+              {currentCatalog.category} Menu
+            </span>
             <h2>{currentCatalog.title}</h2>
             <p>{currentCatalog.description}</p>
           </div>
@@ -200,7 +199,7 @@ export default function ServicesPage({
             style={{
               display: "grid",
               gridTemplateColumns:
-                selectedCategory === "packages"
+                activeCategory === "packages"
                   ? "repeat(auto-fit, minmax(310px, 1fr))"
                   : "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "1.8rem",
@@ -331,14 +330,14 @@ export default function ServicesPage({
                   </div>
 
                   <a
-                    href={BRAND.freshaBookingUrl}
+                    href={buildWhatsAppBookingUrl(item.title, item.price)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-primary"
                     style={{ padding: "0.65rem 1.1rem", fontSize: "0.84rem" }}
                   >
                     <ExternalLink size={14} />
-                    Book
+                    Book via WhatsApp
                   </a>
                 </div>
               </div>

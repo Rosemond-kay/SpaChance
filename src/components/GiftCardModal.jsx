@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X, Sparkles, CheckCircle2, Gift } from "lucide-react";
-import { BRAND } from "../data/spachanceData";
+import { BRAND, buildWhatsAppBookingUrl } from "../data/spachanceData";
 
 export default function GiftCardModal({ isOpen, onClose }) {
   const [amount, setAmount] = useState("500");
@@ -38,7 +38,10 @@ export default function GiftCardModal({ isOpen, onClose }) {
           "_blank",
         );
       } else {
-        window.open(BRAND.freshaBookingUrl, "_blank");
+        window.open(
+          buildWhatsAppBookingUrl("information about SpaChance packages"),
+          "_blank",
+        );
       }
       setOrdered(false);
       onClose();
@@ -378,19 +381,23 @@ export default function GiftCardModal({ isOpen, onClose }) {
                 : "Order Gift Card via WhatsApp"}
             </button>
 
-            <button
-              onClick={() => handleOrder("fresha")}
-              disabled={ordered || isOrderDisabled}
+            <a
+              href={buildWhatsAppBookingUrl(
+                "information about SpaChance packages",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-secondary"
               style={{
                 width: "100%",
                 fontSize: "0.85rem",
-                opacity: ordered || isOrderDisabled ? 0.65 : 1,
-                cursor: ordered || isOrderDisabled ? "not-allowed" : "pointer",
+                display: "inline-flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              View Available Spa Packages on Fresha
-            </button>
+              Discuss Spa Packages on WhatsApp
+            </a>
           </div>
         </div>
       </div>

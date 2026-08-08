@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import {
-  Award,
-  ShieldCheck,
-  Heart,
-  Sparkles,
-  MapPin,
   Calendar,
-  ArrowRight,
+  Sparkles,
+  Heart,
+  Shield,
+  Award,
+  ExternalLink,
 } from "lucide-react";
-import { BRAND } from "../data/spachanceData";
+import { BRAND, buildWhatsAppBookingUrl } from "../data/spachanceData";
 
 export default function AboutPage({ onOpenBookModal }) {
   const [founderImageSrc, setFounderImageSrc] = useState(BRAND.founder.image);
@@ -58,7 +57,7 @@ export default function AboutPage({ onOpenBookModal }) {
                 textShadow: "0 2px 8px rgba(0,0,0,0.5)",
               }}
             >
-              Our Story & Studio
+              Our Philosophy & Founder
             </span>
             <h1
               style={{
@@ -68,7 +67,7 @@ export default function AboutPage({ onOpenBookModal }) {
                 textShadow: "0 2px 14px rgba(0,0,0,0.6)",
               }}
             >
-              Science-Backed Skincare. Serene Atmosphere.
+              Quiet Luxury & Skin Barrier Science
             </h1>
             <p
               style={{
@@ -86,7 +85,7 @@ export default function AboutPage({ onOpenBookModal }) {
             </p>
 
             <a
-              href={BRAND.freshaBookingUrl}
+              href={buildWhatsAppBookingUrl("a SpaChance service")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -98,7 +97,7 @@ export default function AboutPage({ onOpenBookModal }) {
               }}
             >
               <Calendar size={17} />
-              Book Your Visit
+              Book
             </a>
           </div>
         </div>
@@ -169,104 +168,111 @@ export default function AboutPage({ onOpenBookModal }) {
                 </div>
                 <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
                   Certified in cosmetic science, advanced facials for chemical
-                  peels, micro-needling, and holistic therapeutic massage for
-                  West African skin profiles.
+                  peels, and micro-needling for melanated skin profiles.
                 </p>
               </div>
 
               <a
-                href={BRAND.freshaBookingUrl}
+                href={buildWhatsAppBookingUrl("a Skin Consultation with Anita")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
               >
                 <Calendar size={16} />
-                Book Consultation
+                Book Consultation on WhatsApp
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Philosophy Pillars */}
+      {/* Values */}
       <section
         className="section-padding"
         style={{ backgroundColor: "#e5d7be" }}
       >
         <div className="container">
-          <div className="section-header center">
-            <span className="tag-subtitle">Our Principles</span>
-            <h2>The SpaChance Standard</h2>
-            <p>
-              Quiet luxury, skin barrier priority, and unhurried care in East
-              Legon.
-            </p>
+          <div
+            className="section-header center"
+            style={{ marginBottom: "2.5rem" }}
+          >
+            <span className="tag-subtitle">Our Core Pillars</span>
+            <h2>Why Choose SpaChance</h2>
           </div>
 
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "1.8rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "2rem",
             }}
           >
-            <div className="spa-card" style={{ padding: "1.8rem" }}>
-              <ShieldCheck
-                size={26}
-                style={{ color: "var(--accent-dark)", marginBottom: "0.8rem" }}
+            <div
+              className="spa-card"
+              style={{ padding: "2rem", textAlign: "center" }}
+            >
+              <Shield
+                size={32}
+                style={{ color: "var(--accent-dark)", marginBottom: "1rem" }}
               />
               <h3
                 style={{
                   fontFamily: "var(--font-serif)",
-                  fontSize: "1.3rem",
+                  fontSize: "1.4rem",
                   marginBottom: "0.5rem",
                 }}
               >
-                Barrier Preservation
+                Barrier First Skincare
               </h3>
-              <p style={{ fontSize: "0.88rem", color: "var(--text-muted)" }}>
-                We protect your natural moisture shield with lipid hydration
-                seals and non-stripping exfoliants.
+              <p style={{ fontSize: "0.88rem" }}>
+                We prioritize long-term skin health over aggressive quick fixes.
+                Every treatment repairs and respects your natural lipid shield.
               </p>
             </div>
 
-            <div className="spa-card" style={{ padding: "1.8rem" }}>
-              <Sparkles
-                size={26}
-                style={{ color: "var(--accent-dark)", marginBottom: "0.8rem" }}
-              />
-              <h3
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "1.3rem",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Quiet Luxury Space
-              </h3>
-              <p style={{ fontSize: "0.88rem", color: "var(--text-muted)" }}>
-                A calm, unhurried treatment environment designed to lower stress
-                and quiet the mind.
-              </p>
-            </div>
-
-            <div className="spa-card" style={{ padding: "1.8rem" }}>
+            <div
+              className="spa-card"
+              style={{ padding: "2rem", textAlign: "center" }}
+            >
               <Heart
-                size={26}
-                style={{ color: "var(--accent-dark)", marginBottom: "0.8rem" }}
+                size={32}
+                style={{ color: "var(--accent-dark)", marginBottom: "1rem" }}
               />
               <h3
                 style={{
                   fontFamily: "var(--font-serif)",
-                  fontSize: "1.3rem",
+                  fontSize: "1.4rem",
                   marginBottom: "0.5rem",
                 }}
               >
-                Tailored Treatment Plans
+                Unhurried Care
               </h3>
-              <p style={{ fontSize: "0.88rem", color: "var(--text-muted)" }}>
-                Customized facial and bodywork protocols matching your specific
-                skin goals and body needs.
+              <p style={{ fontSize: "0.88rem" }}>
+                Your appointment is dedicated solely to you. We schedule
+                adequate time between clients for deep relaxation without rush.
+              </p>
+            </div>
+
+            <div
+              className="spa-card"
+              style={{ padding: "2rem", textAlign: "center" }}
+            >
+              <Sparkles
+                size={32}
+                style={{ color: "var(--accent-dark)", marginBottom: "1rem" }}
+              />
+              <h3
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "1.4rem",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Melanin Skin Mastery
+              </h3>
+              <p style={{ fontSize: "0.88rem" }}>
+                Specialized protocols formulated specifically for rich melanin
+                tones to prevent hyperpigmentation and post-acne marks.
               </p>
             </div>
           </div>

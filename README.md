@@ -7,6 +7,16 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
+## SPA routing note
+
+The site uses client-side routing for pages such as /about, /services, /blog, and /book. For direct visits or hard reloads to work correctly on deployment, the hosting provider must rewrite all non-file requests to /index.html.
+
+Typical rewrite rules:
+
+- Netlify: add a public/\_redirects file with `/ * /index.html 200`
+- Vercel: add a vercel.json rewrite rule to route all paths to `/index.html`
+- Apache/Nginx: configure fallback rewrites to the SPA entrypoint
+
 ## React Compiler
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).

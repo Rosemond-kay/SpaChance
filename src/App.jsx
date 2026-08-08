@@ -14,83 +14,26 @@ import BookPage from "./pages/BookPage";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
+import { getPageStateFromLocation, buildRoute } from "./router";
 
-const getPageFromPath = (pathname) => {
-  const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-
-  switch (normalizedPath) {
-    case "/about":
-      return "about";
-    case "/services":
-      return "services";
-    case "/blog":
-      return "blog";
-    case "/book":
-      return "book";
-    case "/contact":
-      return "contact";
-    case "/privacy":
-      return "privacy";
-    case "/terms":
-      return "terms";
-    default:
-      return "home";
-  }
-};
-
-const getCategoryFromSearch = (search) => {
-  const params = new URLSearchParams(search);
-  return params.get("category") || "packages";
-};
-
-const buildRoute = (page, category = "packages") => {
-  const routeMap = {
-    home: "/",
-    about: "/about",
-    services: "/services",
-    blog: "/blog",
-    book: "/book",
-    contact: "/contact",
-    privacy: "/privacy",
-    terms: "/terms",
-  };
-
-  const baseRoute = routeMap[page] || "/";
-
-  if (page !== "services") {
-    return baseRoute;
-  }
-
-  const url = new URL(window.location.href);
-  url.pathname = "/services";
-
-  if (category && category !== "packages") {
-    url.searchParams.set("category", category);
-  } else {
-    url.searchParams.delete("category");
-  }
-
-  return `${url.pathname}${url.search}`;
-};
-
-const updateDocumentMeta = (page, category) => {
-  const route = buildRoute(page, category);
+const updateDocumentMeta = (page, category, blogSlug) => {
+  const route = buildRoute(page, category, blogSlug);
   const canonical = `${window.location.origin}${route}`;
   const pageMeta = {
     home: {
-      title: "SpaChance | Premium Skin & Wellness, East Legon",
+      title: "SpaChance | Premium Skin & Wellness, Ogbojo-Madina",
       description:
-        "Premium skin, wellness, and restorative massage in East Legon, Accra. Book tailored facials, barrier care, and spa rituals.",
+        "Premium skin, wellness, and restorative massage in Ogbojo-Madina, Accra. Book tailored facials, barrier care, and spa rituals.",
     },
     about: {
       title: "About SpaChance | Skin Specialist & Wellness Studio",
       description:
-        "Learn about Anita Sekyere, SpaChance’s founder, and the studio’s barrier-care philosophy in East Legon, Accra.",
+        "Learn about Anita Sekyere, SpaChance’s founder, and the studio’s barrier-care philosophy in Ogbojo-Madina, Accra.",
     },
     services: {
       title: "Services & Packages | SpaChance",
       description:
-        "Explore SpaChance facials, massage, pedicure, makeup, and brows & lash services in East Legon, Accra.",
+        "Explore SpaChance facials, massage, pedicure, makeup, and brows & lash services in Ogbojo-Madina, Accra.",
     },
     blog: {
       title: "Blog & Insights | SpaChance",
@@ -100,12 +43,12 @@ const updateDocumentMeta = (page, category) => {
     book: {
       title: "Book & Hours | SpaChance",
       description:
-        "Book your SpaChance treatment online or by WhatsApp and view studio hours in East Legon, Accra.",
+        "Book your SpaChance treatment online or by WhatsApp and view studio hours in Ogbojo-Madina, Accra.",
     },
     contact: {
       title: "Contact SpaChance",
       description:
-        "Get in touch with SpaChance by phone, WhatsApp, or email for consultations and bookings in East Legon, Accra.",
+        "Get in touch with SpaChance by phone, WhatsApp, or email for consultations and bookings in Ogbojo-Madina, Accra.",
     },
     privacy: {
       title: "Privacy Policy | SpaChance",
@@ -153,6 +96,7 @@ const updateDocumentMeta = (page, category) => {
 
 export default function App() {
   const [activePage, setActivePage] = useState("home");
+  const [activeBlogSlug, setActiveBlogSlug] = useState(null);
   const [serviceCategory, setServiceCategory] = useState("packages");
   const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
   const [isFreshaModalOpen, setIsFreshaModalOpen] = useState(false);
@@ -164,31 +108,52 @@ export default function App() {
 
     if (nextPage === "services") {
       setServiceCategory(options.category || "packages");
+    } else if (nextPage === "blog") {
+      setActiveBlogSlug(options.slug || null);
+    } else {
+      setActiveBlogSlug(null);
     }
   };
 
   useEffect(() => {
-    const initialPage = getPageFromPath(window.location.pathname);
-    const initialCategory =
-      initialPage === "services"
-        ? getCategoryFromSearch(window.location.search)
-        : "packages";
+    const initialRoute = getPageStateFromLocation(window.location);
 
-    setActivePage(initialPage);
-    setServiceCategory(initialCategory);
-    updateDocumentMeta(initialPage, initialCategory);
+    setActivePage(initialRoute.page);
+    setServiceCategory(initialRoute.category);
+    setActiveBlogSlug(initialRoute.blogSlug || null);
+
+    const route = buildRoute(
+      initialRoute.page,
+      initialRoute.category,
+      initialRoute.blogSlug,
+    );
+
+    if (`${window.location.pathname}${window.location.search}` !== route) {
+      window.history.replaceState({}, "", route);
+    }
+
+    updateDocumentMeta(
+      initialRoute.page,
+      initialRoute.category,
+      initialRoute.blogSlug,
+    );
   }, []);
 
   useEffect(() => {
     const route = buildRoute(
       activePage,
       activePage === "services" ? serviceCategory : "packages",
+      activePage === "blog" ? activeBlogSlug : null,
     );
     const currentRoute = `${window.location.pathname}${window.location.search}`;
 
     if (currentRoute !== route) {
       window.history.pushState(
-        { page: activePage, category: serviceCategory },
+        {
+          page: activePage,
+          category: serviceCategory,
+          blogSlug: activeBlogSlug,
+        },
         "",
         route,
       );
@@ -197,20 +162,22 @@ export default function App() {
     updateDocumentMeta(
       activePage,
       activePage === "services" ? serviceCategory : "packages",
+      activePage === "blog" ? activeBlogSlug : null,
     );
-  }, [activePage, serviceCategory]);
+  }, [activePage, activeBlogSlug, serviceCategory]);
 
   useEffect(() => {
     const handlePopState = () => {
-      const nextPage = getPageFromPath(window.location.pathname);
-      const nextCategory =
-        nextPage === "services"
-          ? getCategoryFromSearch(window.location.search)
-          : "packages";
+      const nextRoute = getPageStateFromLocation(window.location);
 
-      setActivePage(nextPage);
-      setServiceCategory(nextCategory);
-      updateDocumentMeta(nextPage, nextCategory);
+      setActivePage(nextRoute.page);
+      setServiceCategory(nextRoute.category);
+      setActiveBlogSlug(nextRoute.blogSlug || null);
+      updateDocumentMeta(
+        nextRoute.page,
+        nextRoute.category,
+        nextRoute.blogSlug,
+      );
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -279,7 +246,11 @@ export default function App() {
         )}
 
         {activePage === "blog" && (
-          <BlogPage onOpenBookModal={() => setIsFreshaModalOpen(true)} />
+          <BlogPage
+            activeBlogSlug={activeBlogSlug}
+            setActivePage={handleSetActivePage}
+            onOpenBookModal={() => setIsFreshaModalOpen(true)}
+          />
         )}
 
         {activePage === "book" && (

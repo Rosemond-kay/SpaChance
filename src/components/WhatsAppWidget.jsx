@@ -10,7 +10,7 @@ export default function WhatsAppWidget() {
   const quickPrompts = [
     "Hi Anita! I'd like to book a custom facial.",
     "Hello! Can I get details on your Spa Packages?",
-    "Hi SpaChance! Where are you located in East Legon?",
+    "Hi SpaChance! Where are you located in Ogbojo-Madina?",
     "I need advice on skin barrier maintenance.",
   ];
 
@@ -144,7 +144,7 @@ export default function WhatsAppWidget() {
               }}
             >
               👋 Welcome to SpaChance! How can we assist you with your skin or
-              wellness journey in East Legon today?
+              wellness journey in Ogbojo-Madina today?
             </div>
 
             <span

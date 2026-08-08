@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  Sparkles,
   Calendar,
+  Sparkles,
   ArrowRight,
-  Check,
-  Search,
-  ChevronDown,
-  ChevronUp,
-  Gift,
+  ShieldCheck,
+  Award,
   ChevronRight,
+  ChevronLeft,
+  Quote,
+  Star,
+  Check,
 } from "lucide-react";
 import {
   BRAND,
@@ -16,8 +17,9 @@ import {
   SPA_PACKAGES,
   SERVICES_CATALOG,
   TESTIMONIALS,
-  FAQS,
+  buildWhatsAppBookingUrl,
 } from "../data/spachanceData";
+import { GoogleLogo } from "../components/SocialLogos";
 
 export default function HomePage({
   setActivePage,
@@ -25,13 +27,9 @@ export default function HomePage({
   onOpenGiftModal,
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [heroTaglineIdx, setHeroTaglineIdx] = useState(0);
-  const [activeFaq, setActiveFaq] = useState(null);
-  const [faqSearch, setFaqSearch] = useState("");
   const [testimonialIdx, setTestimonialIdx] = useState(0);
-  const [founderImageSrc, setFounderImageSrc] = useState(BRAND.founder.image);
 
-  // Auto Hero Carousel
+  // Auto-rotate hero slider
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
@@ -39,7 +37,7 @@ export default function HomePage({
     return () => clearInterval(timer);
   }, []);
 
-  // Auto Testimonial Crossfade
+  // Auto-rotate testimonials every 7 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setTestimonialIdx((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -47,15 +45,9 @@ export default function HomePage({
     return () => clearInterval(timer);
   }, []);
 
-  const filteredFaqs = FAQS.filter(
-    (f) =>
-      f.q.toLowerCase().includes(faqSearch.toLowerCase()) ||
-      f.a.toLowerCase().includes(faqSearch.toLowerCase()),
-  );
-
   return (
     <div className="home-page">
-      {/* 1. Full Viewport Hero Carousel */}
+      {/* 1. Full Viewport Hero Slider */}
       <section
         style={{
           position: "relative",
@@ -63,20 +55,20 @@ export default function HomePage({
           display: "flex",
           alignItems: "center",
           backgroundColor: "var(--bg-dark)",
-          overflow: "hidden",
           color: "var(--text-dark-bg)",
-          paddingTop: "80px",
+          overflow: "hidden",
+          paddingTop: "100px",
         }}
       >
-        {HERO_SLIDES.map((slide, idx) => (
+        {HERO_SLIDES.map((slide, index) => (
           <div
-            key={idx}
+            key={index}
             style={{
               position: "absolute",
               inset: 0,
-              opacity: currentSlide === idx ? 0.88 : 0,
-              transition: "opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1)",
-              zIndex: 1,
+              opacity: currentSlide === index ? 0.88 : 0,
+              transition: "opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1)",
+              zIndex: currentSlide === index ? 1 : 0,
             }}
           >
             <img
@@ -86,26 +78,23 @@ export default function HomePage({
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                transform: currentSlide === idx ? "scale(1.02)" : "scale(1)",
-                transition: "transform 6000ms linear",
+                transform: currentSlide === index ? "scale(1.03)" : "scale(1)",
+                transition: "transform 7000ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             />
-            {/* Reduced Dark Overlay so real photos are vibrant */}
+            {/* Softened Dark Overlay */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(to right, rgba(25, 22, 19, 0.6) 0%, rgba(25, 22, 19, 0.3) 55%, rgba(25, 22, 19, 0.05) 100%), linear-gradient(to top, rgba(237, 224, 200, 0.4) 0%, transparent 25%)",
+                  "linear-gradient(to right, rgba(25, 22, 19, 0.6) 0%, rgba(25, 22, 19, 0.35) 55%, rgba(25, 22, 19, 0.1) 100%)",
               }}
             />
           </div>
         ))}
 
-        <div
-          className="container"
-          style={{ position: "relative", zIndex: 2, padding: "4rem 1rem" }}
-        >
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div style={{ maxWidth: "680px" }}>
             <span
               className="tag-subtitle"
@@ -127,24 +116,21 @@ export default function HomePage({
                 textShadow: "0 2px 14px rgba(0,0,0,0.6)",
               }}
             >
-              {heroTaglineIdx === 0
-                ? BRAND.tagline
-                : BRAND.alternateTaglines[heroTaglineIdx - 1]}
+              {HERO_SLIDES[currentSlide].headline}
             </h1>
 
             <p
               style={{
+                fontSize: "1.15rem",
                 color: "#f5eae0",
-                fontSize: "1.12rem",
-                lineHeight: "1.65",
                 marginBottom: "2.2rem",
-                maxWidth: "600px",
+                maxWidth: "560px",
+                lineHeight: "1.65",
                 textShadow: "0 2px 10px rgba(0,0,0,0.6)",
               }}
             >
-              Personalized skin barrier maintenance, therapeutic massage, and
-              curated spa packages in Ogbojo-Madina, Accra. Guided by certified
-              specialist Anita Sekyere.
+              Quiet luxury facials, hyperpigmentation treatment, and restorative
+              bodywork by Anita Sekyere in Ogbojo-Madina.
             </p>
 
             <div
@@ -156,7 +142,7 @@ export default function HomePage({
               }}
             >
               <a
-                href={BRAND.freshaBookingUrl}
+                href={buildWhatsAppBookingUrl("a SpaChance visit")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
@@ -168,7 +154,7 @@ export default function HomePage({
                 }}
               >
                 <Calendar size={17} />
-                Book Your Visit
+                Book via WhatsApp
               </a>
 
               <button
@@ -188,6 +174,7 @@ export default function HomePage({
           </div>
         </div>
 
+        {/* Slide Indicators */}
         <div
           style={{
             position: "absolute",
@@ -233,7 +220,7 @@ export default function HomePage({
             <h2>Our Specialized Offerings</h2>
             <p>
               Select a category to explore our skin barrier facials, massage
-              therapy, and curated packages in Accra.
+              therapy, pedicure & manicure, and curated packages in Accra.
             </p>
           </div>
 
@@ -276,17 +263,17 @@ export default function HomePage({
             style={{ marginBottom: "2.5rem" }}
           >
             <span className="tag-subtitle">⭐ Most Popular</span>
-            <h2>Featured Spa Packages</h2>
+            <h2>Curated Spa Packages</h2>
             <p>
-              Unhurried sanctuary rituals combining skin barrier repair with
-              full-body muscle recovery.
+              Complete mind and body resets designed to restore skin barrier
+              health and melt away deep muscle stress.
             </p>
           </div>
 
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
               gap: "2rem",
             }}
           >
@@ -297,142 +284,158 @@ export default function HomePage({
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  height: "100%",
-                  overflow: "hidden",
-                  position: "relative",
+                  justifyContent: "space-between",
+                  border: pkg.popular
+                    ? "2px solid var(--accent-dark)"
+                    : "1px solid var(--border-subtle)",
                 }}
               >
-                <div className="img-editorial" style={{ height: "200px" }}>
-                  <img src={pkg.image} alt={pkg.title} />
-                  <span
-                    className="featured-badge"
-                    style={{
-                      position: "absolute",
-                      top: "15px",
-                      left: "15px",
-                      zIndex: 2,
-                    }}
-                  >
-                    {pkg.badge}
-                  </span>
-                </div>
-
-                <div
-                  style={{
-                    padding: "1.6rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    flexGrow: 1,
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-serif)",
-                      fontSize: "1.4rem",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    {pkg.title}
-                  </h3>
-
-                  <p
-                    style={{
-                      fontSize: "0.88rem",
-                      color: "var(--text-muted)",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    {pkg.description}
-                  </p>
-
+                <div>
                   <div
-                    style={{
-                      backgroundColor: "rgba(255, 255, 255, 0.4)",
-                      padding: "0.85rem",
-                      borderRadius: "4px",
-                      marginBottom: "1.2rem",
-                      flexGrow: 1,
-                    }}
+                    className="img-editorial"
+                    style={{ height: "200px", marginBottom: "1.2rem" }}
                   >
-                    <span
-                      style={{
-                        fontSize: "0.72rem",
-                        fontWeight: 600,
-                        textTransform: "uppercase",
-                        color: "var(--accent-dark)",
-                        display: "block",
-                        marginBottom: "0.4rem",
-                      }}
-                    >
-                      Included:
-                    </span>
-                    <ul
-                      style={{
-                        listStyle: "none",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "0.35rem",
-                      }}
-                    >
-                      {pkg.includes.map((inc, i) => (
-                        <li
-                          key={i}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.4rem",
-                            fontSize: "0.82rem",
-                            color: "var(--text-primary)",
-                          }}
-                        >
-                          <Check
-                            size={14}
-                            style={{ color: "var(--accent-dark)", shrink: 0 }}
-                          />
-                          <span>{inc}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <img src={pkg.image} alt={pkg.title} />
+                    {pkg.badge && (
+                      <span
+                        className="featured-badge"
+                        style={{
+                          position: "absolute",
+                          top: "12px",
+                          left: "12px",
+                          zIndex: 2,
+                        }}
+                      >
+                        {pkg.badge}
+                      </span>
+                    )}
                   </div>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      paddingTop: "0.9rem",
-                      borderTop: "1px solid var(--border-subtle)",
-                    }}
-                  >
-                    <div>
+                  <div style={{ padding: "0 1.4rem 1.4rem 1.4rem" }}>
+                    <span
+                      style={{
+                        fontSize: "0.78rem",
+                        color: "var(--accent-dark)",
+                        fontWeight: 600,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                      }}
+                    >
+                      {pkg.subtitle}
+                    </span>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "1.4rem",
+                        marginTop: "0.2rem",
+                        marginBottom: "0.6rem",
+                      }}
+                    >
+                      {pkg.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: "0.88rem",
+                        color: "var(--text-muted)",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      {pkg.description}
+                    </p>
+
+                    <div
+                      style={{
+                        backgroundColor: "rgba(255, 255, 255, 0.4)",
+                        padding: "0.85rem",
+                        borderRadius: "4px",
+                        marginBottom: "1rem",
+                      }}
+                    >
                       <span
                         style={{
-                          fontSize: "0.78rem",
-                          color: "var(--text-light)",
-                          display: "block",
-                        }}
-                      >
-                        {pkg.duration}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-serif)",
-                          fontSize: "1.4rem",
+                          fontSize: "0.72rem",
                           fontWeight: 600,
+                          textTransform: "uppercase",
+                          color: "var(--accent-dark)",
+                          display: "block",
+                          marginBottom: "0.4rem",
                         }}
                       >
-                        {pkg.price}
+                        Includes:
                       </span>
+                      <ul
+                        style={{
+                          listStyle: "none",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        {pkg.includes.map((inc, i) => (
+                          <li
+                            key={i}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.4rem",
+                              fontSize: "0.82rem",
+                              color: "var(--text-primary)",
+                            }}
+                          >
+                            <Check
+                              size={14}
+                              style={{ color: "var(--accent-dark)", shrink: 0 }}
+                            />
+                            <span>{inc}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
-                    <button
-                      onClick={() => onBookService(pkg)}
-                      className="btn-primary"
-                      style={{ padding: "0.65rem 1.2rem", fontSize: "0.85rem" }}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        paddingTop: "0.9rem",
+                        borderTop: "1px solid var(--border-subtle)",
+                      }}
                     >
-                      <Calendar size={14} />
-                      Book Package
-                    </button>
+                      <div>
+                        <span
+                          style={{
+                            fontSize: "0.78rem",
+                            color: "var(--text-light)",
+                            display: "block",
+                          }}
+                        >
+                          {pkg.duration}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-serif)",
+                            fontSize: "1.4rem",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {pkg.price}
+                        </span>
+                      </div>
+
+                      <a
+                        href={buildWhatsAppBookingUrl(pkg.title, pkg.price)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary"
+                        style={{
+                          padding: "0.65rem 1.2rem",
+                          fontSize: "0.85rem",
+                        }}
+                      >
+                        <Calendar size={14} />
+                        Book
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -457,41 +460,62 @@ export default function HomePage({
           >
             <div
               className="img-editorial"
-              style={{ height: "420px", borderRadius: "6px" }}
+              style={{
+                height: "440px",
+                boxShadow: "0 20px 45px rgba(46, 41, 37, 0.12)",
+                borderRadius: "6px",
+              }}
             >
               <img
-                src={founderImageSrc}
-                alt="Anita Sekyere - Founder"
-                onError={() => {
-                  if (founderImageSrc !== BRAND.founder.fallbackImage) {
-                    setFounderImageSrc(BRAND.founder.fallbackImage);
-                  }
-                }}
+                src={BRAND.founder.image}
+                alt="Anita Sekyere - Founder & Skin Specialist"
               />
             </div>
 
             <div>
-              <span className="tag-subtitle">Certified Skin Specialist</span>
-              <h2 style={{ marginBottom: "1rem" }}>Meet Anita Sekyere</h2>
-              <p style={{ marginBottom: "1rem" }}>
-                SpaChance was founded to deliver visible skin correction without
-                aggressive stripping. We specialize in skin barrier maintenance,
-                acne resolution, and hyperpigmentation care for West African
-                skin.
+              <span className="tag-subtitle">Meet Our Founder</span>
+              <h2
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
+                  marginBottom: "1rem",
+                }}
+              >
+                Anita Sekyere
+              </h2>
+              <h3
+                style={{
+                  fontSize: "1.1rem",
+                  color: "var(--accent-dark)",
+                  fontWeight: 500,
+                  marginBottom: "1.2rem",
+                }}
+              >
+                {BRAND.founder.title}
+              </h3>
+              <p
+                style={{
+                  fontSize: "1.05rem",
+                  lineHeight: "1.7",
+                  marginBottom: "1.8rem",
+                  color: "var(--text-muted)",
+                }}
+              >
+                {BRAND.founder.bio}
               </p>
 
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
-                  gap: "1rem",
-                  marginBottom: "1.5rem",
+                  gap: "1.2rem",
+                  marginBottom: "2rem",
                 }}
               >
                 <div
                   style={{
-                    borderLeft: "2px solid var(--accent-primary)",
-                    paddingLeft: "0.8rem",
+                    borderLeft: "3px solid var(--accent-dark)",
+                    paddingLeft: "0.85rem",
                   }}
                 >
                   <strong
@@ -501,18 +525,18 @@ export default function HomePage({
                       display: "block",
                     }}
                   >
-                    Barrier Science
+                    Customized Care
                   </strong>
                   <span
                     style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}
                   >
-                    Ceramide hydration seals.
+                    Every treatment is tailored to your skin.
                   </span>
                 </div>
                 <div
                   style={{
-                    borderLeft: "2px solid var(--accent-primary)",
-                    paddingLeft: "0.8rem",
+                    borderLeft: "3px solid var(--accent-dark)",
+                    paddingLeft: "0.85rem",
                   }}
                 >
                   <strong
@@ -527,7 +551,7 @@ export default function HomePage({
                   <span
                     style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}
                   >
-                    Unhurried East Legon studio.
+                    Unhurried Ogbojo-Madina studio.
                   </span>
                 </div>
               </div>
@@ -543,7 +567,7 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* 5. Testimonials */}
+      {/* 5. Google Business Profile Genuine Reviews */}
       <section
         className="section-padding"
         style={{
@@ -553,216 +577,201 @@ export default function HomePage({
       >
         <div
           className="container"
-          style={{ maxWidth: "800px", textAlign: "center" }}
+          style={{ maxWidth: "860px", textAlign: "center" }}
         >
-          <span className="tag-subtitle" style={{ color: "#ab9f8f" }}>
-            Client Feedback
-          </span>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              backgroundColor: "rgba(237, 224, 200, 0.12)",
+              padding: "0.4rem 1rem",
+              borderRadius: "20px",
+              marginBottom: "1rem",
+            }}
+          >
+            <GoogleLogo size={18} />
+            <span
+              style={{ fontSize: "0.85rem", color: "#ede0c8", fontWeight: 600 }}
+            >
+              5.0 Star Rating on Google Business Profile
+            </span>
+          </div>
+
+          <h2 style={{ color: "#ffffff", marginBottom: "2rem" }}>
+            Client Reviews & Testimonials
+          </h2>
 
           <div
             style={{
-              minHeight: "140px",
+              minHeight: "220px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              padding: "2rem",
+              borderRadius: "8px",
+              border: "1px solid rgba(140, 128, 112, 0.2)",
+              position: "relative",
             }}
           >
+            <Quote
+              size={36}
+              style={{
+                position: "absolute",
+                top: "1rem",
+                left: "1.2rem",
+                color: "rgba(237, 224, 200, 0.15)",
+              }}
+            />
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "0.2rem",
+                marginBottom: "0.8rem",
+              }}
+            >
+              {[...Array(TESTIMONIALS[testimonialIdx].stars || 5)].map(
+                (_, s) => (
+                  <Star key={s} size={16} fill="#c68a2c" color="#c68a2c" />
+                ),
+              )}
+            </div>
+
             <p
               style={{
                 fontFamily: "var(--font-serif)",
-                fontSize: "clamp(1.2rem, 2.2vw, 1.6rem)",
+                fontSize: "clamp(1.1rem, 2vw, 1.45rem)",
                 fontStyle: "italic",
                 color: "#ede0c8",
-                marginBottom: "1rem",
+                marginBottom: "1.2rem",
+                lineHeight: "1.6",
+                whiteSpace: "pre-line",
               }}
             >
               "{TESTIMONIALS[testimonialIdx].quote}"
             </p>
-            <strong style={{ fontSize: "0.95rem", color: "#ede0c8" }}>
+
+            <strong style={{ fontSize: "1.05rem", color: "#ffffff" }}>
               {TESTIMONIALS[testimonialIdx].author}
             </strong>
-            <span style={{ fontSize: "0.8rem", color: "#ab9f8f" }}>
-              {TESTIMONIALS[testimonialIdx].role}
+            <span
+              style={{
+                fontSize: "0.82rem",
+                color: "#ab9f8f",
+                marginTop: "0.2rem",
+              }}
+            >
+              {TESTIMONIALS[testimonialIdx].role} •{" "}
+              {TESTIMONIALS[testimonialIdx].date}
             </span>
           </div>
 
+          {/* Carousel Navigation Buttons */}
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "0.5rem",
-              marginTop: "1.5rem",
+              alignItems: "center",
+              gap: "1rem",
+              marginTop: "1.8rem",
             }}
           >
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setTestimonialIdx(i)}
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  backgroundColor:
-                    testimonialIdx === i
-                      ? "#ede0c8"
-                      : "rgba(237, 224, 200, 0.25)",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-                aria-label={`Testimonial ${i + 1}`}
-              />
-            ))}
+            <button
+              onClick={() =>
+                setTestimonialIdx(
+                  (prev) =>
+                    (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length,
+                )
+              }
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(237, 224, 200, 0.3)",
+                color: "#ede0c8",
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+              aria-label="Previous review"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <div style={{ display: "flex", gap: "0.4rem" }}>
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setTestimonialIdx(i)}
+                  style={{
+                    width: testimonialIdx === i ? "20px" : "8px",
+                    height: "8px",
+                    borderRadius: "4px",
+                    backgroundColor:
+                      testimonialIdx === i
+                        ? "#c68a2c"
+                        : "rgba(237, 224, 200, 0.3)",
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "all 300ms ease",
+                  }}
+                  aria-label={`Review ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() =>
+                setTestimonialIdx((prev) => (prev + 1) % TESTIMONIALS.length)
+              }
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(237, 224, 200, 0.3)",
+                color: "#ede0c8",
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+              aria-label="Next review"
+            >
+              <ChevronRight size={20} />
+            </button>
           </div>
         </div>
       </section>
 
-      {/* 6. FAQ Section */}
+      {/* 6. Gift Cards Section */}
       <section
         className="section-padding"
         style={{ backgroundColor: "var(--bg-primary)" }}
       >
-        <div className="container" style={{ maxWidth: "850px" }}>
-          <div className="section-header center">
-            <span className="tag-subtitle">Frequently Asked Questions</span>
-            <h2>Client Insights</h2>
-            <p>
-              Pricing, skin barrier care, and booking details for your visit.
-            </p>
-          </div>
-
-          <div style={{ marginBottom: "2rem", position: "relative" }}>
-            <input
-              type="text"
-              placeholder="Search questions (cost, facial, massage, location)..."
-              value={faqSearch}
-              onChange={(e) => setFaqSearch(e.target.value)}
-              className="input-spa"
-              style={{ paddingLeft: "2.6rem" }}
-            />
-            <Search
-              size={16}
-              style={{
-                position: "absolute",
-                left: "1rem",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--text-light)",
-              }}
-            />
-          </div>
-
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}
-          >
-            {filteredFaqs.map((faq, idx) => {
-              const isExpanded = activeFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="spa-card"
-                  style={{ overflow: "hidden" }}
-                >
-                  <button
-                    onClick={() => setActiveFaq(isExpanded ? null : idx)}
-                    style={{
-                      width: "100%",
-                      padding: "1.2rem 1.5rem",
-                      textAlign: "left",
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      fontWeight: 600,
-                      fontSize: "0.98rem",
-                      color: "var(--text-primary)",
-                    }}
-                  >
-                    <span>{faq.q}</span>
-                    {isExpanded ? (
-                      <ChevronUp size={18} />
-                    ) : (
-                      <ChevronDown size={18} />
-                    )}
-                  </button>
-
-                  {isExpanded && (
-                    <div
-                      style={{
-                        padding: "0 1.5rem 1.2rem 1.5rem",
-                        fontSize: "0.9rem",
-                        color: "var(--text-muted)",
-                        borderTop: "1px solid var(--border-subtle)",
-                        paddingTop: "0.8rem",
-                      }}
-                    >
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Gift Card Callout */}
-      <section
-        className="section-padding"
-        style={{ backgroundColor: "#e5d7be" }}
-      >
-        <div className="container">
-          <div
-            className="spa-card"
-            style={{
-              padding: "2.5rem 2rem",
-              backgroundColor: "#eddcc2",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-              gap: "2rem",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <span
-                className="tag-subtitle"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                <Gift size={15} /> Gift Cards
-              </span>
-              <h2
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "2rem",
-                  marginBottom: "0.8rem",
-                }}
-              >
-                Give the SpaChance Experience
-              </h2>
-              <p style={{ marginBottom: "1.2rem", fontSize: "0.92rem" }}>
-                Digital and physical SpaChance Gift Cards for any treatment or
-                package in Ogbojo-Madina, Accra.
-              </p>
-              <button onClick={onOpenGiftModal} className="btn-primary">
-                <Sparkles size={15} /> Purchase Gift Card
-              </button>
-            </div>
-
-            <div
-              className="img-editorial"
-              style={{ height: "220px", borderRadius: "6px" }}
-            >
-              <img
-                src="/assets/hero_book_real.jpg"
-                alt="SpaChance Gift Voucher"
-              />
-            </div>
-          </div>
+        <div
+          className="container"
+          style={{ textAlign: "center", maxWidth: "680px" }}
+        >
+          <Sparkles
+            size={28}
+            style={{ color: "var(--accent-dark)", marginBottom: "0.6rem" }}
+          />
+          <h2 style={{ marginBottom: "0.6rem" }}>
+            Gift a SpaChance Experience
+          </h2>
+          <p style={{ marginBottom: "1.5rem", fontSize: "0.95rem" }}>
+            SpaChance Gift Cards allow your loved ones to choose their preferred
+            skincare treatment or massage therapy at their convenience.
+          </p>
+          <button onClick={onOpenGiftModal} className="btn-primary">
+            <Sparkles size={15} /> Purchase Gift Voucher
+          </button>
         </div>
       </section>
     </div>

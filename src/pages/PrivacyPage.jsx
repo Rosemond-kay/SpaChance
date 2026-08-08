@@ -23,16 +23,15 @@ export default function PrivacyPage() {
             <p style={{ marginBottom: "1rem" }}>
               <strong>Information we collect:</strong> When you visit our
               website, we may collect basic technical data such as browser type,
-              IP address, and pages viewed. When you book through Fresha or
+              IP address, and pages viewed. When you book through WhatsApp or
               contact us by WhatsApp or email, we may collect your name, phone
               number, preferred treatment, and booking details.
             </p>
             <p style={{ marginBottom: "1rem" }}>
               <strong>How we use it:</strong> We use your information to respond
               to inquiries, manage appointments, provide customer support, and
-              improve the experience on our website. Booking data may be shared
-              securely with our booking partner, Fresha, to process
-              reservations.
+              improve the experience on our website. Booking data may be stored
+              securely as part of our WhatsApp appointment coordination.
             </p>
             <p style={{ marginBottom: "1rem" }}>
               <strong>Cookies:</strong> We may use cookies to improve site

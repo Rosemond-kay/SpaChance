@@ -1,6 +1,6 @@
 import React from "react";
 import { Calendar, MapPin, Phone, Mail, MessageCircle } from "lucide-react";
-import { BRAND } from "../data/spachanceData";
+import { BRAND, buildWhatsAppBookingUrl } from "../data/spachanceData";
 
 export default function ContactPage() {
   return (
@@ -145,13 +145,13 @@ export default function ContactPage() {
                 </h2>
               </div>
               <a
-                href={BRAND.freshaBookingUrl}
+                href={buildWhatsAppBookingUrl("a SpaChance appointment")}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-primary"
                 style={{ marginTop: "0.4rem" }}
               >
-                <MessageCircle size={16} /> Open Fresha Booking
+                <MessageCircle size={16} /> Book via WhatsApp
               </a>
             </div>
           </div>

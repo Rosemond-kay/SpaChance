@@ -13,7 +13,7 @@ export default function SeoSchema() {
       address: {
         "@type": "PostalAddress",
         streetAddress:
-          BRAND.address?.streetAddress || "East Legon / North Legon Area",
+          BRAND.address?.streetAddress || "Ogbojo / Madina Area",
         addressLocality: BRAND.address?.addressLocality || "Accra",
         addressCountry: BRAND.address?.addressCountry || "GH",
       },
