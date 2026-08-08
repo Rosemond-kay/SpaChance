@@ -280,6 +280,20 @@ export const SERVICES_CATALOG = [
         ),
       },
       {
+        id: "facial-5",
+        title:
+          "Barrier Repair Facial (3 sessions with aftercare skincare products)",
+        badge: "Consultation Required",
+        duration: "6h 15m (3 sessions)",
+        price: "Expert recommendation needed before booking",
+        description:
+          "A barrier repair facial is a restorative treatment aimed at repairing and fortifying the skin's natural barrier, providing relief from dryness, sensitivity, and irritation. Requires consultation and skin analysis before booking.",
+        whatsappUrl: buildWhatsAppBookingUrl(
+          "Barrier Repair Facial (3 sessions + aftercare products)",
+          "Expert recommendation needed before booking",
+        ),
+      },
+      {
         id: "facial-1",
         title: "Acne Treatment Facial (2 treatments & aftercare skincare products)",
         popular: true,
@@ -301,20 +315,7 @@ export const SERVICES_CATALOG = [
           "Expert recommendation needed before booking",
         ),
       },
-      {
-        id: "facial-5",
-        title:
-          "Barrier Repair Facial (3 sessions with aftercare skincare products)",
-        badge: "Consultation Required",
-        duration: "6h 15m (3 sessions)",
-        price: "Expert recommendation needed before booking",
-        description:
-          "A barrier repair facial is a restorative treatment aimed at repairing and fortifying the skin's natural barrier, providing relief from dryness, sensitivity, and irritation. Requires consultation and skin analysis before booking.",
-        whatsappUrl: buildWhatsAppBookingUrl(
-          "Barrier Repair Facial (3 sessions + aftercare products)",
-          "Expert recommendation needed before booking",
-        ),
-      },
+      
       
       {
         id: "microneedling-menu",

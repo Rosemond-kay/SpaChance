@@ -29,11 +29,11 @@ export default function HomePage({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [testimonialIdx, setTestimonialIdx] = useState(0);
 
-  // Auto-rotate hero slider
+  // Auto-rotate hero slider (slower, luxurious pace)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 6000);
+    }, 8500);
     return () => clearInterval(timer);
   }, []);
 
@@ -67,7 +67,7 @@ export default function HomePage({
               position: "absolute",
               inset: 0,
               opacity: currentSlide === index ? 0.88 : 0,
-              transition: "opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1)",
+              transition: "opacity 2000ms cubic-bezier(0.22, 1, 0.36, 1)",
               zIndex: currentSlide === index ? 1 : 0,
             }}
           >
@@ -79,7 +79,7 @@ export default function HomePage({
                 height: "100%",
                 objectFit: "cover",
                 transform: currentSlide === index ? "scale(1.03)" : "scale(1)",
-                transition: "transform 7000ms cubic-bezier(0.22, 1, 0.36, 1)",
+                transition: "transform 9000ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             />
             {/* Softened Dark Overlay */}
@@ -130,7 +130,7 @@ export default function HomePage({
               }}
             >
               Quiet luxury facials, hyperpigmentation treatment, and restorative
-              bodywork by Anita Sekyere in Ogbojo-Madina.
+              bodywork by wellness experts in Ogbojo-Madina.
             </p>
 
             <div
@@ -182,6 +182,7 @@ export default function HomePage({
             right: "5%",
             zIndex: 3,
             display: "flex",
+            alignItems: "center",
             gap: "0.5rem",
           }}
         >
@@ -190,14 +191,17 @@ export default function HomePage({
               key={i}
               onClick={() => setCurrentSlide(i)}
               style={{
-                width: currentSlide === i ? "24px" : "8px",
-                height: "8px",
-                borderRadius: "4px",
+                width: currentSlide === i ? "20px" : "6px",
+                height: "6px",
+                minWidth: 0,
+                minHeight: 0,
+                padding: 0,
+                borderRadius: currentSlide === i ? "3px" : "50%",
                 backgroundColor:
                   currentSlide === i ? "#ffffff" : "rgba(255, 255, 255, 0.4)",
                 border: "none",
                 cursor: "pointer",
-                transition: "all 400ms ease",
+                transition: "all 400ms cubic-bezier(0.22, 1, 0.36, 1)",
                 boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
               }}
               aria-label={`Slide ${i + 1}`}
@@ -262,7 +266,7 @@ export default function HomePage({
             className="section-header center"
             style={{ marginBottom: "2.5rem" }}
           >
-            <span className="tag-subtitle">⭐ Most Popular</span>
+            <span className="tag-subtitle">Most Popular</span>
             <h2>Curated Spa Packages</h2>
             <p>
               Complete mind and body resets designed to restore skin barrier
@@ -703,22 +707,25 @@ export default function HomePage({
               <ChevronLeft size={20} />
             </button>
 
-            <div style={{ display: "flex", gap: "0.4rem" }}>
+            <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
               {TESTIMONIALS.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setTestimonialIdx(i)}
                   style={{
-                    width: testimonialIdx === i ? "20px" : "8px",
-                    height: "8px",
-                    borderRadius: "4px",
+                    width: testimonialIdx === i ? "18px" : "6px",
+                    height: "6px",
+                    minWidth: 0,
+                    minHeight: 0,
+                    padding: 0,
+                    borderRadius: testimonialIdx === i ? "3px" : "50%",
                     backgroundColor:
                       testimonialIdx === i
                         ? "#c68a2c"
                         : "rgba(237, 224, 200, 0.3)",
                     border: "none",
                     cursor: "pointer",
-                    transition: "all 300ms ease",
+                    transition: "all 300ms cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
                   aria-label={`Review ${i + 1}`}
                 />
