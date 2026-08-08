@@ -1,0 +1,22 @@
+# Robots.txt for SpaChance - Premium Skin & Wellness Studio
+# Production URL: https://spachance.com/robots.txt
+
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /blog
+Allow: /blog/
+Allow: /book
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+
+# Block private, administrative, or query-heavy parameter paths
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /*?*query=
+
+# Absolute Sitemap Location
+Sitemap: https://spachance.com/sitemap.xml

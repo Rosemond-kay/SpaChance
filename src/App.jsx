@@ -18,7 +18,7 @@ import { getPageStateFromLocation, buildRoute } from "./router";
 
 const updateDocumentMeta = (page, category, blogSlug) => {
   const route = buildRoute(page, category, blogSlug);
-  const canonical = `${window.location.origin}${route}`;
+  const canonical = `https://spachance.com${route}`;
   const pageMeta = {
     home: {
       title: "SpaChance | Premium Skin & Wellness, Ogbojo-Madina",

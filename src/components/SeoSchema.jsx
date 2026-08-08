@@ -5,7 +5,7 @@ export default function SeoSchema() {
   useEffect(() => {
     const localBusinessSchema = {
       "@context": "https://schema.org",
-      "@type": "BeautySalon",
+      "@type": ["DaySpa", "BeautySalon"],
       name: BRAND.name,
       image: "https://spachance.com/assets/spachance_logo.png",
       url: "https://spachance.com",
